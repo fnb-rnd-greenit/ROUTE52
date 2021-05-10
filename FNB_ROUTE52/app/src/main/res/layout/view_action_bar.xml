@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_action_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:background="@drawable/line_action_box"/>
+
+        <TextView
+            android:id="@+id/txt_action_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:background="@drawable/line_action_box"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_action_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|left">
+
+        <ImageView
+            android:id="@+id/btn_action_logout"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_logout"/>
+
+        <ImageView
+            android:id="@+id/btn_action_printer"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_print"/>
+
+        <ImageView
+            android:id="@+id/btn_action_receipt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_print_list"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|right">
+
+        <ImageView
+            android:id="@+id/btn_action_statement"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_statement"/>
+
+        <ImageView
+            android:id="@+id/btn_action_memo"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_memo"/>
+
+    </LinearLayout>
+
+</FrameLayout>

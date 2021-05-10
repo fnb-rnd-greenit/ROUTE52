@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".activity.OrderActivity">
+
+    <include android:layout_width="match_parent"
+        android:layout_height="56dp"
+        layout="@layout/view_action_bar" />
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/zxing_barcode_scanner"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:visibility="gone"
+        app:zxing_scanner_layout="@layout/view_barcode_scanner">
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/btn_order_add"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/icon_order_plus"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/light_gray"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="라운드"
+                android:textSize="20dp"
+                android:textColor="@color/dark_gray2"/>
+
+            <Spinner
+                android:id="@+id/spinner_order_round"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/line_white_box" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="인원"
+                android:textSize="20dp"
+                android:textColor="@color/dark_gray2"/>
+
+            <Spinner
+                android:id="@+id/spinner_order_person"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/line_white_box" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="지불"
+                android:textSize="20dp"
+                android:textColor="@color/dark_gray2"/>
+
+            <Spinner
+                android:id="@+id/spinner_order_pay_div"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/line_white_box" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/btn_order_kitchen"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:text="주방"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/btn_common"/>
+
+        <Button
+            android:id="@+id/btn_order_print"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:text="전표출력"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/btn_gray"/>
+
+        <Button
+            android:id="@+id/btn_order_delete"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:text="주문취소"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/btn_common"/>
+
+        <Button
+            android:id="@+id/btn_order_calculate"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:text="정산"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/btn_gray"/>
+
+        <Button
+            android:id="@+id/btn_order_save"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="저장"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/btn_common"/>
+
+    </LinearLayout>
+
+</LinearLayout>

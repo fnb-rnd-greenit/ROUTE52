@@ -1,0 +1,536 @@
+@charset "utf-8";
+/* CSS Document */
+@import url(media.css);
+
+/*-------------------- contents common --------------------*/
+#wrap .contents{width:98%;margin:0.3em auto;}
+.grayBg{width:100%;background:#f9f9f9;border:1px solid #d2d2d2;}
+.borderBg{width:100%;border:1px solid #d2d2d2;margin:0.8em 0;}
+.contentBg{width:100%;margin:0.8em 0;}
+
+.roundBgBox{width:100%;border-radius:10px;color:#ffffff;margin-bottom:10px;padding:0.5em;}
+
+
+.commonDot{font:0.9em 'Nanum GothicB', sans-serif;color: #4f4f4f;padding-left:20px;
+background:url('../../images/m_valley/commonDot.png') left no-repeat;margin:20px 0 10px;background-size:15px 15px;}
+.infoDot{background:url('../../images/m_valley/infoDot.png')no-repeat ;width:10px;height:10px;margin-right:5px;}
+.dotLine{height:1px;border-bottom:1px dashed #dcdcdc;}
+.bgBottom{margin-bottom:15px;}
+
+/* btn ��ư */
+.motion{background:#3e8ddc;color:#fff;}
+.cancel{background:#6e6e6e;color:#fff;}
+.orangeBtn{background:#ff6600;text-align:center;color:#ffffff;margin:0 auto;}
+.blueBtn{background:#3e8ddc;text-align:center;color:#ffffff;margin:0 auto;}
+.grayBtn{background:#686868;text-align:center;color:#ffffff;margin:0 auto;}
+.bookingBtn{color:#999999;border:1px solid #e0e0e0;font-size:11px;}
+.greenBtn{background:#6ea724;text-align:center;color:#ffffff;margin:0 auto;}
+
+/* font color, style */
+.orangeRed{color:#de3e1e;font-family:'Nanum GothicB';}
+.orange{color:#ff6600;font-family:'Nanum GothicB';}
+.blue{color:#3e8ddc;font-family:'Nanum GothicB';}
+.red{color:#e35d5d;}
+.gray{color:#b7b7b7;}
+.yellow{color:#ffe776}
+
+.bold{font-family:'Nanum GothicB'}
+.through{text-decoration:line-through;}
+.underline{text-decoration:underline;}
+
+/* select arrow */
+.select-arrow{background: url('../../images/m_valley/select-arrow.png') no-repeat 90% 50%;text-indent:0.28em;}
+.select-arrow2{background: url('../../images/m_valley/select-arrow2.png') no-repeat 100% 48%;text-indent:0.6em}
+.select-arrow3{background: url('../../images/m_valley/select-arrow2.png') no-repeat 97% 48%;text-indent:0.5em;}
+
+/* paging */
+.paging{width:100%;margin:20px auto 0;}
+.paging ul{text-align:center;}
+.paging ul li{width:30px;height:35px;display:inline-block;line-height:35px;margin-right:5px;border:1px solid #c2c2c2;color:#111111;background:#fff;}
+.paging ul li:last-child{margin-right:0;}
+.paging ul li.on{background:#ececec}
+.paging ul li a{font:1.1em 'Namum GothicB';display:inline-block;padding:9px 10px;color:inherit}
+.paging ul li img{vertical-align:middle;}
+
+/*-- BtnBox --*/
+.btnBox{margin:10px auto;padding-top:1em;font-size:0;overflow:hidden;width:50%;}
+.btnBox li{float:left;width:49%;padding:0.7em 0;margin-right:2%;text-align:center;}
+.btnBox li:last-child{margin-right:0;}
+.btnBox li > a{font:0.9em 'Manum GothicB';color:#fff;}
+
+.btnBox_three{margin:10px auto;padding-top:1em;font-size:0;overflow:hidden;width:77%;}
+.btnBox_three li{float:left;width:32%;padding:0.7em 0;margin-right:2%;text-align:center;}
+.btnBox_three li:last-child{margin-right:0;}
+.btnBox_three li > a{font:0.9em 'Manum GothicB';color:#fff;}
+
+.commonTable{width:100%;border-top:1px solid #45454f;border-bottom:1px solid #45454f;margin:5px 0 20px;}
+.commonTable.tableBottom{margin-bottom:20px;}
+.commonTable th{font-size:0.9em;padding:10px;background:#45454f;color:#fff;}
+.commonTable tr{font-size:0.9em;height:40px;color:#535252;border-bottom:1px solid #dedede;text-align:center;}
+.commonTable tr:last-child{border-bottom:0;}
+.commonTable td{font-size:0.9em;}
+.commonTable td input{width:90%;border:1px solid #dedede;height:25px;}
+.commonTable td:last-child{border-right:0;}
+.commonTable td input.orangeBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;border:0;}
+.commonTable td input.blueBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;border:0;}
+.commonTable td input.grayBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;border:0;}
+.commonTable td a.orangeBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.commonTable td a.blueBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.commonTable td a.grayBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.commonTable td span.orangeBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;border-radius:10px;}
+.commonTable td span.blueBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.commonTable td span.grayBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.commonTable td .txt{color:#b2b2b2;font-size:0.9em;}
+
+
+.mainTitle{font:1.5em 'Nanum GothicB';text-align:center;color:#45454f;padding:15px 0;border-bottom:1px solid #dedede;}
+.mainTitle img{vertical-align:middle;}
+
+
+/*-------------------- Member --------------------*/
+/* Login �α��� */
+.grayBg .loginCont{padding:10px 0.7em;}
+.grayBg .loginCont .loginTitle{margin:5px 0 15px;text-align:left;font-size:0.9em}
+.grayBg .loginCont .loginTitle img{vertical-align:middle;margin-right:5px;}
+
+.grayBg .loginCont .logInputBox{overflow:hidden;}
+.grayBg .loginCont .logInputBox .loginInput{width:78%;float:left;}
+.grayBg .loginCont .logInputBox .loginInput input{text-indent:10px;width:100%;height:45px;border:1px solid #e0e0e0;margin-bottom:8px;}
+.grayBg .loginCont .logInputBox .loginBtn{float:left;width:20%;text-align:center;padding:41px 0;margin-left:2%;background:#3e8ddc;}
+.grayBg .loginCont .logInputBox .loginBtn a{color:#fff;}
+
+.grayBg .loginCont .memBox{clear:both;padding:10px 0;}
+.grayBg .loginCont .memBox span{margin-right:15px;font-size:12px}
+
+.grayBg .loginCont .LogFindBtn{width:100%;height:50px;margin-bottom:20px;}
+.grayBg .loginCont .LogFindBtn a{float:left;width:49%;display:block;text-align:center;border:1px solid #bfbfbf;color:#727272;padding:0.9em 0;}
+.grayBg .loginCont .LogFindBtn .id_Btn{margin-right:2%;}
+
+.grayBg .loginCont .snsJoinBox{width:100%;overflow:hidden;font-size:0;margin-bottom:30px;}
+.grayBg .loginCont .snsJoinBox li{width:25%;float:left;}
+.grayBg .loginCont .snsJoinBox li img{width:100%}
+
+.grayBg .loginTxt{width:100%;margin:0 auto;text-align:center;margin:20px 0;}
+.grayBg .loginTxt .joinBtn{display:block;width:25%;padding:13px 0;margin:15px auto 0;text-align:center;color:#fff;background:#6e6e6e;}
+}
+
+/* join01 ȸ������ */
+.grayBg .snsJoinList{}
+.grayBg .snsJoinList a{display:block;margin:0.5em 2em;}
+.grayBg .snsJoinList a:first-child{margin-top:1em;}
+.grayBg .snsJoinList a:last-child{margin-bottom:1em;}
+.grayBg .snsJoinList a img{width:100%;}
+
+/* join02 �Ǹ����� */
+.grayBg .hpIpBox{width:100%;margin:2em auto;}
+.grayBg .hpIpBox .hpBox{margin: 0 auto;width:80%;background:#fff;border:1px solid #d2d2d2;padding:30px 15px;text-align:center;color:#6a6a6a;} 
+.grayBg .hpIpBox .hpBox img{display:block;margin:0 auto 10px;}
+.grayBg .hpIpBox .hpBox span{font:1em 'Nanum GothicB';display:block;margin:10px 0;}
+.grayBg .hpIpBox .hpBox p{font-size:0.8em;color:#6a6a6a;width:80%;margin:0 auto;line-height:20px;}
+
+.contentBg .joinTextList{font-size:0.75em;color:#8f8f8f;line-height:23px;margin:1em 0;}
+.contentBg .joinTextList .joinTxtTitle{color:#3a3a3a;margin-bottom:10px;font-size:1.1em;display:block;line-height:20px;}
+.contentBg .joinTextList .point{color:#3a3a3a;font-size:1.0em;}
+
+/* join03 �������*/
+.grayBg .agreeyBgBox{width:100%;margin:30px 0;min-width:313px;}
+.agreeyCheck{width:100%;overflow:hidden;margin-bottom:10px;}
+.agreeyCheck li{float:right;font-size:0.8em;color:#a1a1a1;margin-left:10px;padding:0.9em 0.5em;}
+
+/* join04 ������ */
+.joinBoxList{width:100%;margin:0 auto;border:1px solid #e0e0e0;padding:1.5em 1.7em;background:#f9f9f9}
+.joinBoxList .joinInfoBox{width:100%;margin:0 auto;overflow:hidden;padding:10px 0;}
+.joinBoxList .joinInfoBox li{float:left;height:50px;width:65%}
+.joinBoxList .joinInfoBox .infoList{width:35%;height:50px;font:1.2em 'Nanum GothicB';color:#7f7f7f;padding-top:15px;}
+.joinBoxList .joinInfoBox li > input{width:100%;height:50px;border:1px solid #e1e1e1;text-indent:10px;}
+.joinBoxList .joinInfoBox li > select{width:32%;height:50px;;border:1px solid #e1e1e1;text-indent:10px;}
+
+.joinBoxList .joinInfoBox .gender{float:left;width:50px;height:50px;text-align:center;padding:15px 0;background:#fff;font-size:16px;color:#7f7f7f;border:1px solid #e1e1e1;margin-right:5px;cursor:pointer;}
+.joinBoxList .joinInfoBox .gender.on{background:#979797;color:#fff;}
+
+.joinBoxList .joinInfoBox li .idInput{width:70%;height:50px;border:1px solid #e1e1e1;text-indent:10px;}
+.joinBoxList .joinInfoBox li .overlap.blueBtn{width:28%;display: inline-block;margin-left:2%;padding:1.1em 0;}
+
+.passTxt{width:100%;margin-left:35%;padding-bottom:0.7em;}
+.passTxt li.title{font-size:1em;padding-bottom:0.4em;}
+.passTxt li{padding:0.2em 0;font-size:0.85em;}
+
+
+/* member ȸ���������� */
+.memberBoxList{width:100%;margin:0 auto;padding:1.5em 1.7em;background:#f9f9f9}
+.memberBoxList .ListUnderLine{padding: 8px 0;border-bottom:1px dashed #e0e0e0;}
+.memberBoxList .ListUnderLine.passBox{padding-top:10px;border-bottom:0;}
+.memberBoxList .ListUnderLine.passBox2{padding-top:0;border-bottom:0;}
+.memberBoxList .ListUnderLine .memberInfoBox{width:100%;margin:0 auto;overflow:hidden;padding:0;}
+.memberBoxList .ListUnderLine .memberInfoBox li{float:left;}
+.memberBoxList .ListUnderLine .memberInfoBox .infoList{width:35%;height:50px;padding: 16px 0;font:1.2em 'Nanum GothicB';color:#7f7f7f;}
+.memberBoxList .ListUnderLine .memberInfoBox .infoConent.just{height:50px;line-height:50px;}
+.memberBoxList .ListUnderLine .memberInfoBox .infoConent{width:65%;font-size:1.0em;color:#7f7f7f;}
+.memberBoxList .ListUnderLine .memberInfoBox li > input{width:100%;height:50px;border:1px solid #e1e1e1;text-indent:10px;}
+.memberBoxList .ListUnderLine .memberInfoBox li > select{width:32%;height:50px;;border:1px solid #e1e1e1;text-indent:10px;}
+.memberBoxList .ListUnderLine .memberInfoBox li input.address{width:56%}
+.memberBoxList .ListUnderLine .memberInfoBox li input.num{width:32%;margin-right:2%;}
+.memberBoxList .ListUnderLine .memberInfoBox li input.num:last-child{margin-right:0;}
+
+.memberBoxList .ListUnderLine .memberInfoBox .gender{float:left;width:50px;height:50px;text-align:center;padding:15px 0;background:#fff;font-size:16px;color:#7f7f7f;border:1px solid #e1e1e1;margin-right:5px;cursor:pointer;}
+.memberBoxList .ListUnderLine .memberInfoBox .gender.on{background:#979797;color:#fff;}
+
+.memberBoxList .ListUnderLine .memberInfoBox li .idBox{width:58%;display:inline-block;}
+.memberBoxList .ListUnderLine .memberInfoBox li .idInput{width:70%;height:50px;border:1px solid #e1e1e1;text-indent:10px;}
+.memberBoxList .ListUnderLine .memberInfoBox li .overlap.grayBtn{font-size:0.9em;width:40%;display: inline-block;margin-left:2%;padding:1.4em 0;}
+
+.memberBoxList .snsAgreeyBox{width:100%;padding:0.7em;background:#fff;border:1px solid #dadada;}
+.memberBoxList .snsAgreeyBox li{overflow:hidden;font-size:0.8em;line-height:1.5em;padding:0.3em 0;}
+.memberBoxList .snsAgreeyBox li .input{float:right;font-size:1em;margin-right:0.9em;}
+
+.memberBoxList .phoneTxt{width:65%;margin-left:35%;padding-bottom:0.9em;font-size:0.95em;color:#de3e1e;font-weight:600;}
+
+.memberBoxList .memPassTxt{width:65%;margin-left:35%;padding-bottom:0.9em;}
+.memberBoxList .memPassTxt .title{color:#3e8ddc;font-weight:600;font-size:0.9em;margin:0.2em 0;}
+.memberBoxList .memPassTxt .cont{padding:0.2em 0;font-size:0.8em;}
+
+.memberBoxList .modifyTxt{width:65%;margin-left:35%;padding-bottom:0.3em;font-size:0.95em;color:#de3e1e;font-weight:600;margin-top:0.4em;}
+.memberBoxList .grayFont{width:65%;margin-left:35%;padding-bottom:0.9em;color:#9b9b9b;font-weight:600;}
+.memberBoxList .grayFont .input{margin-right:0.9em;font-size:0.9em;}
+.memberBoxList .email-Select{margin-left:2%;background: url('../../images/m_valley/select-arrow2.png') no-repeat 100% 48%;text-indent:0.6em}
+
+
+.memberMent{width:100%;margin:0 auto;font-size:0.8em;padding:1em 0;text-align:center;}
+
+.midTitleBox{width:100%;overflow:hidden;margin:0.6em 0;} 
+.midTitleBox .commonDot{display:inline-block;margin:9px 0;}
+.midTitleBox .memberBtn{float:right;text-align:center;margin-right:10px;width:25%;font-size:0.85em;padding:0.8em 0;color:#fff;margin-right:2%;background:#3e8ddc;}
+.midTitleBox .memberBtn.withdraw{color:#afafaf;border:1px solid #c3c3c3;background:#fff;margin-right:0;}
+
+/* withdraw ȸ��Ż�� */
+.withdrawLtxt.title{font:1.1em 'Nanum GothicB';text-align:center;padding:0.9em 0;}
+.withdrawLtxt.title li{font:1.1em 'Nanum GothicB';line-height:1.45em;}
+.withdrawMtxt{margin:0 auto;font-size:0.9em;text-align:center;padding:0.5em 0 0.9em;line-height:1.6em;}
+.bt-padng{padding:2em 1.2em;}
+.withdrawMtxt span{font:14px 'Nanum GothicB';margin:0 auto 0.5em;color:#3e8ddc;display:block;}
+
+/*-------------------- board --------------------*/
+/* list_gallery ���䰶���� �̺�Ʈ */
+.eventMoreBtn{width:100%;text-align:center;background:#45454f;}
+.eventMoreBtn .moreBtn{color:#fff;cursor:pointer;width:100%;padding:1em 0;text-align:center;}
+.eventMoreBtn .moreBtn li:first-child{margin-bottom:0.5em;}
+
+/* view �ۺ��� */
+.grayBgBox.viewBox{overflow:hidden;min-width:320px;}
+.viewBox .viewTitleBox{width:100%;height:24px;padding: 0 0.5em 0.5em;margin: 1.5em 0;border-bottom:1px dashed #e0e0e0;}
+.viewBox .viewTitle{font-size:0.85em;float:left;}
+.viewBox .viewDate{float:right;font-size:0.8em;}
+.viewBox .viewMainImage{display:block;margin:0 auto;width:98%}
+.viewBox .viewTxt{margin:20px 0; text-align:center;width:98%;height:15px;border: 1px solid #e1e1e1;}
+.viewBox .viewTxt .viewInput.orangeBtn{width:28%;display: inline-block;margin-left:2%;padding:1.1em 0;}
+#viewAttach{padding: 0.8em;}
+#viewAttach .attachTxt{font-size:0.85em;}
+#viewAttach .attachImg{width:16px;height:16px;vertical-align: middle;}
+
+
+/*-------------------- MY ZONE ������ --------------------*/
+.myzoneTabList{width:100%;overflow:hidden;box-shadow:0px 1px 3px #dfdfdf;}
+.myzoneTabList li{float:left;width:33.3%;border-right:1px solid #dedede;margin:12px 0;}
+.myzoneTabList li:last-child{border-right:0;}
+.myzoneTabList li a{display:block;font:0.8em 'Nanum GothicB';color:#45454f;text-align:center;}
+.myzoneTabList li.on a{color:#3e8ddc;}
+
+.myzoneTabList3{width:100%;overflow:hidden;box-shadow:0px 1px 3px #dfdfdf;}
+.myzoneTabList3 li{float:left;width:33.33333%;border-right:1px solid #dedede;margin:12px 0;}
+.myzoneTabList3 li:last-child{border-right:0;}
+.myzoneTabList3 li a{display:block;font:0.8em 'Nanum GothicB';color:#45454f;text-align:center;}
+.myzoneTabList3 li.on a{color:#3e8ddc;}
+
+/* reserChange ��õ���� - ����  */
+.borderBg .infoList{margin:0.5em 0.7em;}
+.borderBg .infoList li{padding:12px 0;}
+.borderBg .infoList li span{display:inline-block;font-size:0.9em}
+.borderBg .infoList .title{width:30%;}
+.borderBg .infoList .blue{color:#3e8ddc;font-family:'Nanum GothicB'}
+.borderBg .infoList li select.select-arrow{width:25%;height:35px;border:1px solid #dddddd;text-indent:15px;}
+
+.info_Ch{margin:20px auto 0;width:117px;}
+.borderBg a.cancel{display:block;width:25%;padding:10px 0;margin:15px auto;text-align:center;color:#fff;background:#6e6e6e;}
+
+.roundBgBox.purple{background:#45454f;color:#fff;font-size:0.8em;text-align:center;padding:1.5em 0;}
+.roundBgBox.purple > span{font-size:1.2em;}
+
+.courseTabList{width:100%;overflow:hidden;margin:0.5em 0;border-bottom:1px solid #d2d2d2}
+.courseTabList li{float:left;width:33.3%;border-right:1px solid #fff;}
+.courseTabList li a{display:block;font-size:0.8em;color:#fff;text-align:center;border-radius:10px 10px 0 0;padding:0.8em 0;background:#828282;}
+.courseTabList li a.on{background:#3e8ddc;}
+
+.sectionList{width:100%;overflow:hidden;}
+.sectionList li{float:left;width:33.3%;}
+.sectionList li a{display:block;width:100%;font-size:0.8em;border:1px solid #d2d2d2;padding:0.6em 0;color:#828282;text-align:center;}
+.sectionList li a.on{color:#3e8ddc;}
+.sectionList li:nth-child(2){border-left:0;}
+.sectionList li:nth-child(3){border-left:0;}
+
+.grayTable{width:100%;margin:0  0 20px;border:1px solid #dedede;}
+.grayTable.tableBottom{margin-bottom:20px;}
+.grayTable th{font-size:0.9em;padding:10px;background:#dadada;}
+.grayTable tr{font-size:0.9em;height:40px;color:#535252;border-top:1px solid #dedede;border-bottom:1px solid #dedede;text-align:center;font-family:"Nanum GothicB"}
+.grayTable td{font-size:0.9em;}
+.grayTable tr:last-child{border-bottom:0;}
+.grayTable td input.orangeBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.grayTable td input.blueBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.grayTable td input.grayBtn{display:block;width:80%;padding:5px 0;font-size:1em;margin-top: -1px;}
+.grayTable td span.orangeBtn{display:block;width:50%;padding:4px 0;font-size:0.7em;margin-top: -1px;border-radius:6px;margin:2px auto;}
+.grayTable td span.blueBtn{display:block;width:50%;padding:3px 0;font-size:0.7em;margin-top: -1px;border-radius:6px;margin:2px auto;}
+.grayTable td span.greenBtn{display:block;width:50%;padding:3px 0;font-size:0.7em;margin-top: -1px;border-radius:6px;}
+.grayTable td .txt{color:#b2b2b2;font-size:0.9em;}
+
+/* coupon ������ */
+.commonTable .coupon{}
+.commonTable .coupon img{max-width:100%}
+/* coupon ������ �̴ϴ޷� */
+.SubMonthBox1{
+    position:absolute;
+    top:138px;
+    left:37%;
+    margin-left:-116px;
+    width:270px;
+    height:245px;
+    border:solid 1px #e3e3e3;
+    background:#fff;
+	display:none; 
+    padding:10px;
+    overflow:hidden;
+    z-index: 202;
+}
+.SubMonthBox1 .monthChoice{overflow:hidden;margin:10px auto;}
+.SubMonthBox1 .monthChoice a{letter-spacing:0;display: inline-block;padding:0 10px;vertical-align: middle;} 
+.SubMonthBox1 .monthChoice .month {margin:0 auto;color:#1d1d1d;font-weight:bold;font-size:19px;text-align:center;padding:0 5px;}
+
+.SubMonthBox1 .calTxt{width:100%;margin:10px auto;text-align:center;font-size:0.9em;letter-spacing:0;}
+.SubMonthBox1 .mainCalendar {text-align: center;width:100%;margin:0 auto;}
+.SubMonthBox1 .mainCalendar th {font-size:0.8em;color:#444444;font-weight: bold;padding:10px 0 ;}
+.SubMonthBox1 .mainCalendar td div {
+font-size:0.9em;font-family:"Nanum GothicB" ;width:30px;color:#b7b7b7;cursor: pointer;margin: auto;
+height:30px;line-height:30px;}
+.SubMonthBox1 .mainCalendar .sun{color: #bf3b3b;height: 20px;}
+.SubMonthBox1 .mainCalendar .possible div{ color:#444; }
+.SubMonthBox1 .mainCalendar .today.possible div{background-color:#f88538;background-size: 20px 20px; border-radius: 10px; color: #fff;}
+
+.SubMonthBox2{
+    position:absolute;
+    top:138px;
+    left:70%;
+	margin-left:-171px;
+    width:270px;
+    height: 245px;
+    border: solid 1px #e3e3e3;
+    background:#fff;
+    display: none; 
+    padding: 10px;
+    overflow:hidden;
+	z-index: 202;
+}
+.SubMonthBox2 .monthChoice{overflow:hidden;margin:10px auto;}
+.SubMonthBox2 .monthChoice a{letter-spacing:0;display: inline-block;padding:0 10px;vertical-align: middle;} 
+.SubMonthBox2 .monthChoice .month {margin:0 auto;color:#1d1d1d;font-weight:bold;font-size:19px;text-align:center;padding:0 5px;}
+
+.SubMonthBox2 .calTxt{width:100%;margin:10px auto;text-align:center;font-size:0.9em;letter-spacing:0;}
+
+.SubMonthBox2 .mainCalendar {text-align: center;width:100%;margin:0 auto;}
+.SubMonthBox2 .mainCalendar th {font-size:0.9em;color:#444444;font-weight: bold;padding:10px 0 ;}
+.SubMonthBox2 .mainCalendar td div {
+font-size:0.9em;font-family:"Nanum GothicB" ;width:30px;color:#b7b7b7;cursor: pointer;margin: auto;
+height:30px;line-height:30px;vertical-align: middle;}
+.SubMonthBox2 .mainCalendar .sun{color: #bf3b3b;height: 20px;}
+.SubMonthBox2 .mainCalendar .possible div{color:#444; }
+.SubMonthBox2 .mainCalendar .today.possible div{background-color:#f88538; background-size: 20px 20px; border-radius: 10px; color: #fff;}
+
+/* score ���ھ���Ȳ */
+.roundBox{width:100%;background:#828282;padding:10px 0;border-radius:10px;margin:0 auto;}
+.roundBox .inquiry {text-align: center;}
+.roundBox .inquiry select{width:18%;height:25px;vertical-align:middle;}
+.roundBox .inquiry .inquiryTitle{font-size:0.8em;color:#ffffff;}
+.roundBox .inquiry .dayInput{width:28%;display:inline-block;background:#fff;height:25px;border:1px solid #dddddd;padding:5px;color:#45454f;font-size:12px;position:relative;vertical-align:middle;}
+.roundBox .inquiry .inquiryImg{vertical-align:middle;}
+.roundBox .inquiry .inquiryBtn {padding: 0.3em 0.4em;color: #ffffff;background:#3e8ddc;font-size: 0.9em;border-radius: 10px;}
+.roundBox .inquiry > span{color:#fff;}
+
+.topScoreTitle{width:100%;background:url('../../images/m_valley/scoreBg.png')no-repeat top;
+background-size:100%;overflow:hidden;margin:0.7em auto;min-width:320px;max-width:480px;}
+.topScoreTitle li{float:left;}
+.topScoreTitle li:nth-child(3){border-right:0;}
+.topScoreTitle .scoreTitle{font:0.9em 'Nanum GothicB';width:35%;padding:2% 0;text-align:center;}
+.topScoreTitle .scoreNum{width:15%;margin:2% 0;text-align:center;color:#fff;border-right:1px solid #fff;font:0.9em 'Nanum GothicB';}
+
+.scoreLine{border-top:1px solid #45454f;width:1200px;overflow:hidden;}
+.scoreLine > span{float:right;padding:10px}
+
+.playerScore{width:100%;margin-bottom:20px;}
+.playerScore .scBtnBox{width:100%;text-align:center;border-bottom:1px solid #dedede;}
+.playerScore .scBtn{color:#afafb1;cursor:pointer;width:110px;padding:20px 0;text-align:center;margin:20px auto;}
+
+.commonTable2{width:100%;}
+.commonTable2 th{font-size:12px;padding:0.5em;border:1px solid #dedede;}
+.commonTable2 th:first-child{border-left:0;}
+.commonTable2 th:last-child{border-right:0;}
+.commonTable2 td{font:0.8em "Nanum GothicB";color:#535252;border:1px solid #dedede;text-align:center;}
+.commonTable2 .total{background:#45454f;color:#fff;}
+.commonTable2 .firstMem{background:#bdbdbd;color:#535252;}
+.commonTable2 .seconMem{background:#f6f6f6;color:#535252;}
+.commonTable2 .thirdMem{background:#eeeeee;color:#535252;}
+/* score ���ھ� �̴ϴ޷� */
+.SubMonthBox3{
+    position:absolute;
+    top: 24px;
+    left:50%;
+    margin-left:-147px;
+    width:270px;
+    height:245px;
+    border:solid 1px #e3e3e3;
+    background:#fff;
+	display:none; 
+    padding:10px;
+    overflow:hidden;
+    z-index: 202;
+}
+.SubMonthBox3 .monthChoice{overflow:hidden;margin:10px auto;}
+.SubMonthBox3 .monthChoice a{letter-spacing:0;display: inline-block;padding:0 10px;vertical-align: middle;} 
+.SubMonthBox3 .monthChoice .month {margin:0 auto;color:#1d1d1d;font-weight:bold;font-size:19px;text-align:center;padding:0 5px;}
+
+.SubMonthBox3 .calTxt{width:100%;margin:10px auto;text-align:center;font-size:0.9em;letter-spacing:0;}
+.SubMonthBox3 .mainCalendar {text-align: center;width:100%;margin:0 auto;}
+.SubMonthBox3 .mainCalendar th {font-size:0.9em;color:#444444;font-weight: bold;padding:10px 0 ;}
+.SubMonthBox3 .mainCalendar td div {
+font-size:0.9em;font-family:"Nanum GothicB" ;width:30px;color:#b7b7b7;cursor: pointer;margin: auto;
+height:30px;line-height:30px;vertical-align: middle;}
+.SubMonthBox3 .mainCalendar .sun{color: #bf3b3b;height: 20px;}
+.SubMonthBox3 .mainCalendar .possible div{ color:#444; }
+.SubMonthBox3 .mainCalendar .today.possible div{background-color:#f88538; background-size: 20px 20px; border-radius: 10px; color: #fff;}
+
+.SubMonthBox4{
+    position:absolute;
+    top:24px;
+    left:50%;
+	margin-left:-201px;
+    width:270px;
+    height: 245px;
+    border: solid 1px #e3e3e3;
+    background:#fff;
+    display: none; 
+    padding: 10px;
+    overflow:hidden;
+	z-index: 202;
+}
+.SubMonthBox4 .monthChoice{overflow:hidden;margin:10px auto;}
+.SubMonthBox4 .monthChoice a{letter-spacing:0;display: inline-block;padding:0 10px;vertical-align: middle;} 
+.SubMonthBox4 .monthChoice .month {margin:0 auto;color:#1d1d1d;font-weight:bold;font-size:19px;text-align:center;padding:0 5px;}
+
+.SubMonthBox4 .calTxt{width:100%;margin:10px auto;text-align:center;font-size:0.9em;letter-spacing:0;}
+
+.SubMonthBox4 .mainCalendar {text-align: center;width:100%;margin:0 auto;}
+
+.SubMonthBox4 .mainCalendar th {font-size:0.9em;color:#444444;font-weight: bold;padding:10px 0 ;}
+.SubMonthBox4 .mainCalendar td div {
+font-size:0.9em;font-family:"Nanum GothicB" ;width:30px;color:#b7b7b7;cursor: pointer;margin: auto;
+height:30px;line-height:30px;vertical-align: middle;}
+
+.SubMonthBox4 .mainCalendar .sun{color: #bf3b3b;height: 20px;}
+.SubMonthBox4 .mainCalendar .possible div{color:#444; }
+.SubMonthBox4 .mainCalendar .today.possible div{background-color:#f88538; background-size: 20px 20px; border-radius: 10px; color: #fff;}
+
+/*-------------------- course --------------------*/
+/* courseIntro */
+.introBox{margin:0.5em 0;}
+.introBox .courseIntroImg{width:100%;}
+.balloon{vertical-align: middle;}
+
+.dataTitle{width:100%;height:30px;line-height:30px;font-size:1.3em;font-weight:600;margin:1em 0 0.4em 0.2em;}
+.courseDataTable{width:98%;margin:0 auto;}
+.courseDataTable .dataListTitle{overflow:hidden;}
+.courseDataTable .dataListTitle.title > li{font-size:0.8em;font-weight:400;border-top:1px solid #dddddd;}
+.courseDataTable .dataListTitle > li{text-align:center;float:left;width:8.67%;font-size:0.8em;font-weight:600;height:25px;line-height:25px;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;}
+.courseDataTable .dataListTitle > li:first-child{width:11%;}
+.courseDataTable .dataListTitle > li:last-child{border-right:0;width:11%;}
+.courseDataTable .dataListTitle.blackData{background:#000000;color:#fff;}
+.courseDataTable .dataListTitle.blueData{background:#378bcc;color:#fff;}
+.courseDataTable .dataListTitle.yellowData{background:#f1bc2c;color:#fff;}
+.courseDataTable .dataListTitle.redData{background:#f1312c;color:#fff;}
+
+/* seowon valley */
+.btnType{overflow:hidden;}
+.btnType>li {float:left;background:#fff;width:49.7%;border:1px solid #dedede;margin-right:0.5%;}
+.btnType>li:last-child{margin-right:0;}
+.btnType li a{display:block;padding:10px 0;font-size:0.9em;text-align:center;color:#45454f;}
+.btnType li.on a{background:#3e8ddc;color:#fff;}
+
+.btnType3{overflow:hidden;}
+.btnType3>li {float:left;background:#fff;width:33%;border:1px solid #dedede;margin-right:0.5%;}
+.btnType3>li:last-child{margin-right:0;}
+.btnType3 li a{display:block;padding:10px 0;font-size:0.9em;text-align:center;color:#45454f;}
+.btnType3 li.on a{background:#3e8ddc;color:#fff;}
+
+
+.courseBg{width: 100%;margin:0.8em 0;background:#f8f8f8;border:1px solid #e8e6e6;padding-bottom:20px;}
+.holeNumBox{overflow:hidden;width:100%;padding-left:0.5em;margin-top:0.5em;}
+.holeNumBox .holeNum{float:left;font-size:3.7em;color:#3e8ddc;font-weight:700;width:10%}
+.holeNumBox .holeText{float:left;margin: 1em 0 0 0.3em;width:60%}
+.holeNumBox .holeText .hole1{font-size:1.2em;color:#464646;font-weight:600;}
+.holeNumBox .holeText .hole2{font-size:1.2em;color:#8c8c8c;font-weight:600;}
+.holeNumBox > select{float:left;width:28%;height:40px;padding:0.3em 0;text-indent:2%;margin-top:1em;}
+
+.courseImg{width:100%;}
+.courseImg > img{width:100%}
+
+.courseInfoBox .videoBox{width:98%;margin:0 auto;border:1px solid #dedede;background:#111111;}
+.courseInfoBox .dataTitle{width:40%;text-align:center;color:#fff;font-size:1em;margin:1em 0 0.6em 2%;background:#45454f;border-radius:16px;}
+
+.courseInfoBox .holeExplainBox{padding:0 2%;}
+.courseInfoBox .holeExplainBox .holeExplain{font-size:0.9em;line-height:1.7em;}
+.courseInfoBox .holeExplainBox .holeExplain > img{vertical-align:middle;}
+
+.courseInfoBox .holeInfo{}
+.courseInfoBox .holeInfo .courseTable{width:100%;margin-top:20px;}
+.courseInfoBox .holeInfo .courseTable th{font-size:0.9em;height:2.7em;line-height:2.7em;text-align:center;border-top:1px solid #bbbbbb;border-right:1px solid #dddddd;border-bottom:1px solid #dddddd;}
+.courseInfoBox .holeInfo .courseTable th:last-child{border-right:0;}
+.courseInfoBox .holeInfo .courseTable th.black{color:#fff;background:#000000;}
+.courseInfoBox .holeInfo .courseTable th.blue{color:#fff;background:#378bcc;}
+.courseInfoBox .holeInfo .courseTable th.gold{color:#fff;background:#f1bc2c;}
+.courseInfoBox .holeInfo .courseTable th.red{color:#fff;background:#f1312c;}
+
+.courseInfoBox .holeInfo .courseTable td{height:2.7em;line-height:2.7em;font-size:1em;font-weight:600;text-align:center;border-right:1px solid #dddddd;border-bottom:1px solid #bbbbbb;}
+.courseInfoBox .holeInfo .courseTable td:last-child{border-right:0;}
+
+
+/*map*/
+.mapTabList3{width:100%;overflow:hidden;box-shadow:0px 1px 3px #dfdfdf;}
+.mapTabList3 li{float:left;width:33.33333%;border-right:1px solid #dedede;border-bottom:1px solid #dedede;padding:12px 0; border-collapse: collapse;}
+.mapTabList3 li:nth-child(3){border-right:0;}
+.mapTabList3 li:nth-child(4){width:50%;}
+.mapTabList3 li:nth-child(5){width:50%;border-right:0;}
+.mapTabList3 li:nth-child(6){width:50%;}
+.mapTabList3 li:last-child{border-right:0;width:50%;}
+.mapTabList3 li a{display:block;font:0.8em 'Nanum GothicB';color:#45454f;text-align:center;}
+.mapTabList3 li.on a{color:#3e8ddc;}
+.mapImg img{ width: 100%;}
+.mapBox a{ font-size: 0.875em;}
+.mapBox a.mapbtn1{ width: 160px; line-height: 32px; border-radius: 20px; color:#fff; background-color:#e04c29; border: 1px solid #e7e7e7; padding: 0 0 0 10px; display: block; margin: 15px 0;
+		box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+		-ms-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+		-webkit-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+		-o-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	}
+.mapBox a.mapbtn1 img{ vertical-align: middle;}
+.mapBox a.mapbtn2{ width: 218px;line-height: 32px;  border-radius: 20px;color:#fff; background-color:3e8dd;  border: 1px solid #e7e7e7; padding: 0 0 0 10px; display: block;margin: 15px 0;
+	box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-ms-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-webkit-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-o-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+}
+.mapBox a.mapbtn2 img{ vertical-align: middle;}
+.mapBox a.mapbtn3{ width: 218px;line-height: 32px;  border-radius: 20px;color:#fff; background-color:#38a8e9; border: 1px solid #e7e7e7; padding: 0 0 0 10px; display: block;margin: 15px 0;
+	box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-ms-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-webkit-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+	-o-box-shadow:0px 7px 0 0 rgba(196,196,196,0.35);
+}
+.mapBox a.mapbtn3 img{ vertical-align: middle;}
+.mapText{ width: 90%; margin:0 auto;}
+.mapText h2{ font-size: 1.25em; color: #404040; margin: 20px 0 10px 0;}
+.mapText h3{ font-size: 1em; color: #404040; line-height: 1.525em;}

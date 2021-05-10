@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="50dp"
+    android:paddingBottom="50dp"
+    android:gravity="center_horizontal">
+
+    <FrameLayout
+        android:layout_width="540dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:padding="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@drawable/line_memo_box">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="@drawable/line_memo_box2">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:text="시간"/>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:text="코스"/>
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:text="예약자명"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_memo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_gray3"
+                    android:textSize="20dp"
+                    android:text="·"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_gray3"
+                    android:textSize="20dp"
+                    android:text=" 메모"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_memo_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:padding="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/line_memo_box3"
+                android:textColor="@color/dark_gray3"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_memo_close"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:background="@drawable/line_exit_box">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_x"
+                android:scaleType="fitCenter"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

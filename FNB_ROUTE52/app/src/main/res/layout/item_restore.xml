@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/itm_restore_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/itm_txt_restore_cos"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_restore_time"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_restore_locker"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_restore_name"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_restore_no"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_restore_total"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/dark_gray2"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/light_gray"/>
+
+</LinearLayout>

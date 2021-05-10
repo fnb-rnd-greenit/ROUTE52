@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Appenders -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss}%5p [%c] %m%n" />
+        </layout>  
+    </appender>
+	
+	<appender name="FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
+	   <param name="File" value="/usr/local/tom_cat2/logs/application-daily-stdout.log" />
+	   <param name="Threshold" value="DEBUG" />
+	   <param name="DatePattern" value=".yyyyMMdd" />	
+       <param name="Append" value="true"/>
+	   <layout class="org.apache.log4j.PatternLayout">
+	       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss}%5p [%c] %m%n" />
+	   </layout>
+	 </appender>
+
+    <!-- Application Loggers -->
+    <logger name="itso" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="console"/>
+        <appender-ref ref="FILEOUT"/>
+    </logger>
+     
+    <!-- Query Loggers -->
+    <logger name="jdbc.sqlonly" additivity="false"> 
+        <level value="INFO"/> 
+        <appender-ref ref="console"/> 
+        <appender-ref ref="FILEOUT"/> 
+    </logger>
+ 
+    <!-- Root Logger -->
+    <root>
+        <priority value="off"/>
+        <appender-ref ref="FILEOUT" />
+    </root>
+
+</log4j:configuration>

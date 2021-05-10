@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SettingActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/background">
+
+    <include android:layout_width="match_parent"
+        android:layout_height="56dp"
+        layout="@layout/view_action_bar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="프린터 연결"
+        android:textSize="30dp"
+        android:textColor="@color/dark_gray3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="기종"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <Spinner
+                android:id="@+id/spinner_setting_device"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:textColor="@color/dark_gray3">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="연결방법"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <Spinner
+                android:id="@+id/spinner_setting_port_type"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:textColor="@color/dark_gray3">
+
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="네트워크"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_network"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="직접입력"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <Button
+                android:id="@+id/btn_setting_network_search"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="검색"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_common"/>
+
+            <Button
+                android:id="@+id/btn_setting_network_test"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="테스트"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_orange"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="전표출력"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <Spinner
+                android:id="@+id/spinner_setting_print_yn"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:textColor="@color/dark_gray3">
+
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="중계설정"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <Switch
+                android:id="@+id/switch_setting_relay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="글씨크기"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_font_size"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="1"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="영수증 하단메세지"
+        android:textSize="30dp"
+        android:textColor="@color/dark_gray3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="업체명"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_company_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="루트52"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="주소"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_address"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="경기도 여주군 북내면 중암리 469-1"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="전화번호"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_tel"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="031-882-0052"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="홈페이지"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+            <EditText
+                android:id="@+id/edit_setting_homepage"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="https://www.route52cc.com"
+                android:textSize="25dp"
+                android:textColor="@color/dark_gray3"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_setting_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:text="취소"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_gray"/>
+
+        <Button
+            android:id="@+id/btn_setting_relay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:text="중계설정"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_orange"/>
+
+        <Button
+            android:id="@+id/btn_setting_reset"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:text="초기화"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_orange"/>
+
+        <Button
+            android:id="@+id/btn_setting_save"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
+            android:text="저장"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_common"/>
+
+    </LinearLayout>
+
+</LinearLayout>

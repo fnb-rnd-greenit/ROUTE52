@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:activity=".activity.MainActivity">
+
+    <include android:layout_width="match_parent"
+        android:layout_height="56dp"
+        layout="@layout/view_action_bar" />
+
+    <LinearLayout
+        android:id="@+id/linear_relay_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중계 단말기로 사용중입니다."
+            android:textColor="@color/dark_gray2"
+            android:textSize="30dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabs_main"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/menu_header1"
+            android:textColor="@color/white"
+            android:elevation="5dp"
+            android:textSize="16sp"
+            app:pstsIndicatorColor="@color/white"
+            app:pstsIndicatorHeight="2dp"
+            app:pstsShouldExpand="true"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_main"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:background="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:background="@color/dark_gray3">
+
+            <TextView
+                android:id="@+id/txt_main_total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray3"
+                android:background="@drawable/line_main_cost_box"/>
+
+            <TextView
+                android:id="@+id/txt_main_pre_total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray3"
+                android:background="@drawable/line_main_cost_box"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="5dp">
+
+            <Button
+                android:id="@+id/btn_main_restore"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="환원"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/btn_gray"/>
+
+            <Button
+                android:id="@+id/btn_main_table_move"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="테이블 이동"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/btn_common"/>
+
+            <Button
+                android:id="@+id/btn_main_table_merge"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="테이블 병합"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/btn_gray"/>
+
+            <Button
+                android:id="@+id/btn_main_write_order"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="주문작성"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:background="@drawable/btn_common"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

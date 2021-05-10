@@ -1,0 +1,1267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="fnb">
+	
+	<select id="versionCheck" resultType="hashmap">
+		SELECT CD_TITLE1 AS VERSION_CODE
+		     , CD_TITLE3 AS DOWNLOAD_URL
+		  FROM CD_COMMON 
+		 WHERE CO_DIV = '317'
+		   AND CD_DIVISION = 'APP'
+		   AND CD_CODE = 'FNB'
+	</select>
+	
+	<select id="getCompanyList" resultType="hashmap">
+		SELECT CO_DIV
+			 , CO_NAME
+		  FROM CO_PLACE
+		 ORDER BY CO_DIV, CO_NAME
+	</select>
+	
+	<select id="getCosList" resultType="hashmap">
+		SELECT CO_DIV
+			 , CD_CODE
+			 , CD_TITLE1 AS CD_NAME
+		  FROM CD_COMMON
+		 WHERE CD_DIVISION = '012'
+   		   AND CD_USEYN = 'Y'
+		 ORDER BY CO_DIV, CD_CODE
+	</select>
+	
+	<select id="getShopList" resultType="hashmap">
+		SELECT CO_DIV
+			 , CD_CODE
+			 , CD_TITLE1 AS CD_NAME                  
+		  FROM CD_COMMON                           
+		 WHERE CD_DIVISION  = '021'              
+		   AND CD_USEYN     = 'Y'                
+		   AND CD_CODE      NOT IN ( '10','80')
+		   AND CD_TYPE      IN ('S', 'H')      
+		 ORDER BY CO_DIV, CD_SORT, CD_CODE
+	</select>
+	
+	<select id="getDiscountList" resultType="hashmap">
+		SELECT CO_DIV
+			 , CD_CODE
+			 , CD_TITLE1 AS CD_NAME
+		  FROM CD_COMMON
+		 WHERE CD_DIVISION = '041'
+		   AND CD_USEYN    = 'Y'
+		 ORDER BY CO_DIV, CAST(CD_CODE AS UNSIGNED)
+	</select>
+	
+	<select id="getSaleDivList" resultType="hashmap">
+		SELECT CO_DIV
+			 , CD_CODE
+			 , CD_TITLE1 AS CD_NAME
+		  FROM CD_COMMON
+		 WHERE CD_DIVISION = '606'
+		   AND CD_USEYN    = 'Y'
+		 ORDER BY CO_DIV, CD_CODE
+	</select>
+	
+	<select id="getMenuDivList" resultType="hashmap">
+		SELECT DISTINCT PD.CO_DIV
+		     , PC.PD_SHOP
+			 , MD.CD_CODE AS MID_CODE
+			 , MD.CD_TITLE1 AS MID_NAME
+			 , SM.CD_CODE AS SMALL_CODE
+			 , SM.CD_TITLE1 AS SMALL_NAME
+		  FROM PD_CODE PD
+		 INNER JOIN PD_COST PC
+		    ON PD.CO_DIV = PC.CO_DIV
+		   AND PD.PD_CD = PC.PD_CD
+		 INNER JOIN CD_COMMON MD
+		    ON PD.CO_DIV = MD.CO_DIV
+		   AND LEFT(PC.PD_CD, 4) = MD.CD_CODE
+		   AND MD.CD_DIVISION 	 = '100'
+   		   AND MD.CD_LENGTH		 = 4
+		 INNER JOIN CD_COMMON SM
+		    ON PD.CO_DIV 		 = SM.CO_DIV
+		   AND LEFT(PC.PD_CD, 6) = SM.CD_CODE
+		   AND SM.CD_DIVISION 	 = '100'
+   		   AND SM.CD_LENGTH 	 = 6
+		 WHERE DATE_FORMAT(NOW(), '%Y%m%d') BETWEEN PD.PD_START_DAY AND PD.PD_END_DAY
+		   AND PC.PD_USE 		 = 'Y'
+		   AND PC.PD_DIV 		 = '1'
+		 ORDER BY PD.CO_DIV, PC.PD_SHOP, MD.CD_CODE, SM.CD_CODE
+	</select>
+	
+	<select id="getMenuList" resultType="hashmap">
+		SELECT DISTINCT PD.CO_DIV
+		     , PC.PD_SHOP
+			 , LEFT(PD.PD_CD, 4) AS MID_CODE
+			 , LEFT(PD.PD_CD, 6) AS SMALL_CODE
+			 , PD.PD_CD
+			 , NVL(PD.PD_NAME, '') AS PD_NAME
+			 , NVL(PD.PD_VAT_YN, 'Y') AS PD_VAT_YN
+			 , IFNULL(PC.PD_COST, 0) AS PD_COST
+			 , IFNULL(PC.PD_VAT, 0) AS PD_VAT
+			 , IFNULL(PC.PD_AMOUNT, 0) AS PD_AMOUNT
+			 , NVL(PD.PD_PICTURE_PATH, '') AS PD_IMAGE_URL
+			 , NVL(PD.PRINT_YN, 'N') AS PRINT_YN
+		  FROM PD_CODE PD
+		 INNER JOIN PD_COST PC
+		    ON PD.CO_DIV = PC.CO_DIV
+		   AND PD.PD_CD  = PC.PD_CD
+		 WHERE DATE_FORMAT(NOW(), '%Y%m%d') BETWEEN PD.PD_START_DAY AND PD.PD_END_DAY
+		   AND PC.PD_USE = 'Y'
+		   AND PC.PD_DIV = '1'
+		<if test='coDiv != null and !coDiv.equals("")'>
+		   AND PD.CO_DIV = #{coDiv}
+		   AND IFNULL(NULLIF(PD.CART_USEYN, ''), 'N') = 'Y'
+		</if>
+		<if test='shop != null and !shop.equals("")'>
+		   AND PC.PD_SHOP = #{shop}
+		</if>
+		<if test='midCode != null and !midCode.equals("")'>
+		   AND LEFT(PD.PD_CD, 4) = #{midCode}
+		</if>
+		 ORDER BY PD.CO_DIV, PC.PD_SHOP, PD.PD_CD
+	</select>
+	
+	<select id="actionLogin" parameterType="hashmap" resultType="hashmap">
+		SELECT H.USER_STAFF
+			 , H.USER_NAME
+			 , GROUP_CONCAT(D.CO_DIV ORDER BY D.CO_DIV ASC SEPARATOR ',') AS GRANT_CODIV
+		  FROM USER_INFO H
+		 INNER JOIN USER_CODIV D
+		    ON H.USER_STAFF = D.USER_STAFF
+		 INNER JOIN USER_PG_LIST P
+		    ON P.CO_DIV = #{coDiv}
+		   AND H.USER_STAFF = P.USER_STAFF
+		   AND P.PG_ID = 'TSALE0100F'
+		 WHERE H.USER_STAFF = #{userId}
+		   AND H.USER_PASSWORD = SHA2(#{userPw}, 256)
+	</select>
+	
+	<select id="getCurrentSales" parameterType="hashmap" resultType="hashmap">
+		SELECT ST.CO_DIV
+			 , ST.SL_SHOP
+			 , ST.SL_DIV
+			 , ST.SL_TABLE_NO
+			 , ST.SL_TABLE_NAME
+			 , SM.SL_DAY
+			 , SM.SL_COS
+			 , CD.CD_TITLE1 AS SL_COS_NM
+			 , IFNULL(NULLIF(SM.SL_TIME, ''), '0000') AS SL_TIME
+			 , IFNULL(NULLIF(EN.EN_NAME, ''), SM.SL_EN_NAME) AS SL_EN_NAME
+			 , SM.EN_CHKINNO
+			 , SM.SL_NO
+			 , SM.SL_TOTAL_AMOUNT
+			 , IFNULL(NULLIF(SM.SL_PAYDIV, '1'), '1') AS SL_PAYDIV
+		     , IFNULL(NULLIF(SM.SL_TABLE_PERSON, '0'), '0') AS SL_TABLE_PERSON
+		     , IFNULL(NULLIF(SM.SL_ROUND, '1'), '1') AS SL_ROUND
+		     , IFNULL(NULLIF(SH.MENU_LIST, ''), '') AS MENU_LIST
+		  FROM SL_TABLE ST
+		  LEFT OUTER JOIN (
+				SELECT CO_DIV
+					 , SL_SHOP
+					 , SL_DAY
+					 , SL_COS
+					 , SL_TIME
+					 , SL_EN_NAME
+					 , SL_NO
+					 , EN_CHKINNO
+					 , SL_TABLE_NO
+					 , SL_PAYDIV
+					 , SL_TOTAL_AMOUNT
+					 , SL_TABLE_PERSON
+					 , SL_ROUND
+				  FROM SL_MASTER
+				 WHERE CO_DIV   = #{coDiv}
+				   AND SL_SHOP  = #{shop}
+				   AND SL_STATE = '1'
+				   AND SL_DAY   = DATE_FORMAT(NOW(), '%Y%m%d') 
+		  ) SM
+		    ON ST.CO_DIV     = SM.CO_DIV
+		   AND ST.SL_SHOP    = SM.SL_SHOP
+		   AND ST.SL_TABLE_NO = SM.SL_TABLE_NO
+		  LEFT OUTER JOIN (
+				SELECT SH.CO_DIV
+					 , SH.SL_DAY
+					 , SH.SL_SHOP
+					 , SH.SL_NO
+					 , GROUP_CONCAT(CONCAT(PD.PD_NAME, '*', SH.SL_COUNT) ORDER BY SL_SEQ ASC SEPARATOR ', ') AS MENU_LIST
+				  FROM SL_HISTORY SH
+				 INNER JOIN PD_CODE PD
+				    ON SH.CO_DIV   = PD.CO_DIV
+				   AND SH.SL_PD_CD = PD.PD_CD
+				 WHERE SH.CO_DIV  = #{coDiv}
+				   AND SH.SL_SHOP = #{shop}
+				   AND SH.SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d') 
+				 GROUP BY SH.CO_DIV, SH.SL_DAY, SH.SL_SHOP, SH.SL_NO
+		  ) SH
+		    ON SM.CO_DIV  = SH.CO_DIV
+		   AND SM.SL_DAY  = SH.SL_DAY
+		   AND SM.SL_SHOP = SH.SL_SHOP
+		   AND SM.SL_NO   = SH.SL_NO
+		  LEFT OUTER JOIN CD_COMMON CD
+		    ON SM.CO_DIV  = CD.CO_DIV
+		   AND SM.SL_COS  = CD.CD_CODE
+		   AND CD.CD_DIVISION = '112'
+		  LEFT OUTER JOIN EN_HISTORY EN
+		    ON SM.CO_DIV = EN.CO_DIV
+		   AND SM.EN_CHKINNO = EN.EN_CHKINNO
+		 WHERE ST.CO_DIV     = #{coDiv}
+		   AND ST.SL_SHOP    = #{shop}
+		   AND ST.SL_USE_YN  = 'Y'
+		 ORDER BY ST.FNB_ORDER_BY, ST.SL_TABLE_NO
+	</select>
+	
+	<select id="getRemainTable" parameterType="hashmap" resultType="hashmap">
+		SELECT ST.SL_TABLE_NO
+			 , ST.SL_TABLE_NAME
+		  FROM SL_TABLE ST
+		  LEFT OUTER JOIN (
+			  SELECT CO_DIV
+				   , SL_SHOP
+				   , SL_TABLE_NO
+				   , SL_DAY
+				FROM SL_MASTER
+			   WHERE CO_DIV   = #{coDiv}
+			     AND SL_SHOP  = #{shop}
+				 AND SL_STATE = '1'
+				 AND SL_DAY   = DATE_FORMAT(NOW(), '%Y%m%d') 
+		  ) SM
+		    ON ST.CO_DIV     = SM.CO_DIV
+		   AND ST.SL_SHOP    = SM.SL_SHOP
+		   AND ST.SL_TABLE_NO = SM.SL_TABLE_NO
+		 WHERE ST.CO_DIV     = #{coDiv}
+		   AND ST.SL_SHOP    = #{shop}
+		   AND ST.SL_USE_YN  = 'Y'
+		   AND ST.SL_DIV     = '1'
+		   AND IFNULL(NULLIF(SM.SL_DAY, ''), '') = ''
+		 ORDER BY ST.SL_TABLE_NO
+		 LIMIT 1
+	</select>
+	
+	<select id="getTotalAmount" parameterType="hashmap" resultType="hashmap">
+		SELECT IFNULL(SUM(SL_TOTAL_AMOUNT), 0) AS TOTAL_AMOUNT
+			 , IFNULL(SUM(IF(SL_PAYDIV = '2', SL_TOTAL_AMOUNT, 0)), 0) PRE_TOTAL_AMOUNT
+		  FROM SL_MASTER
+		 WHERE CO_DIV  = #{coDiv}
+		   AND SL_SHOP = #{shop}
+		   AND SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')
+		   AND SL_STATE <![CDATA[<>]]> '3'
+	</select>
+	
+	<select id="getMemoList" parameterType="hashmap" resultType="hashmap">
+		SELECT EN.EN_TIME
+			 , CONCAT(CC.CD_TITLE1, '코스') AS EN_COS
+			 , BK.BK_NAME
+			 , DATE_FORMAT(EN.INPUT_DATETIME, '%Y-%m-%d %H:%i:%s') AS INPUT_DATETIME
+		     , CASE
+				 WHEN EN.EN_MEMODIV = '1' THEN '예약'                                  
+		         WHEN EN.EN_MEMODIV = '2' THEN '내장'                                  
+		         WHEN EN.EN_MEMODIV = '3' THEN '경기'                                  
+		         WHEN EN.EN_MEMODIV = '4' THEN '업장'                                  
+		         WHEN EN.EN_MEMODIV = '5' THEN '호텔예약'                              
+		       ELSE '호텔내장' END AS SEND_NAME
+		     , CASE                                                                          
+		         WHEN EN.EN_SUBDIV = '1' THEN  '예약'                                   
+		         WHEN EN.EN_SUBDIV = '2' THEN  '내장'                                   
+		         WHEN EN.EN_SUBDIV = '3' THEN  '경기'                                   
+		         WHEN EN.EN_SUBDIV = '4' THEN  '업장'                                   
+		         WHEN EN.EN_SUBDIV = '5' THEN  '호텔예약'                               
+		       ELSE  '호텔내장' END AS RECEIVE_NAME
+		     , UI.USER_NAME
+		     , EN.EN_REMARK
+		  FROM EN_MEMO EN
+		 INNER JOIN USER_INFO UI
+		    ON EN.UPDATE_STAFF = UI.USER_STAFF
+		 INNER JOIN BK_HISTORY BK
+		    ON EN.CO_DIV    = BK.CO_DIV
+		   AND EN.EN_DAY    = BK.BK_DAY
+		   AND EN.EN_COS    = BK.BK_COS
+		   AND EN.EN_TIME   = BK.BK_TIME
+		 INNER JOIN CD_COMMON CC
+		    ON EN.CO_DIV = CC.CO_DIV
+		   AND EN.EN_COS = CC.CD_CODE
+		   AND CC.CD_DIVISION = '012'
+		 WHERE EN.CO_DIV    = #{coDiv}
+		   AND EN.EN_DAY    = DATE_FORMAT(NOW(), '%Y%m%d')
+		   AND EN.EN_SUBDIV = '4'
+		 ORDER BY EN.EN_TIME
+	</select>
+	
+	<select id="getStatementList" parameterType="hashmap" resultType="hashmap">
+		SELECT SM.CO_DIV
+			 , SM.SL_SHOP
+			 , SM.SL_NO
+			 , SM.SL_TABLE_NO
+			 , ST.SL_TABLE_NAME
+			 , NVL(GP_NAME, '') AS GP_NAME
+			 , SM.SL_TOTAL_AMOUNT
+			 , SM.SL_STATE
+			 , SM.SL_TIME
+		  FROM SL_MASTER SM
+		 INNER JOIN SL_TABLE ST
+		    ON SM.CO_DIV      = ST.CO_DIV
+		   AND SM.SL_SHOP     = ST.SL_SHOP
+		   AND SM.SL_TABLE_NO = ST.SL_TABLE_NO
+		  LEFT OUTER JOIN EN_HISTORY EH
+			ON SM.CO_DIV      = EH.CO_DIV
+		   AND SM.EN_CHKINNO  = EH.EN_CHKINNO
+		  LEFT OUTER JOIN GP_MAININFO GM
+		    ON EH.EN_GPNUM    = GM.GP_NUM
+		 WHERE SM.CO_DIV      = #{coDiv}
+		   AND SM.SL_SHOP     = #{shop}
+		   AND SM.SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')
+		 ORDER BY SM.SL_NO DESC
+	</select>
+	
+	<select id="getVisitors" parameterType="hashmap" resultType="hashmap">		
+		SELECT A.CO_DIV
+		     , A.EN_CHKINNO
+		     , A.EN_DAY
+		     , A.EN_COS
+		     , M.CD_TITLE1 AS EN_COS_NM
+		     , A.EN_TIME
+		     , CONCAT(A.EN_NAME, IF(IFNULL(NULLIF(EN_JOY_YN, ''), '') = '', '', CONCAT('(', A.EN_JOY_YN, ')'))) AS EN_NAME
+		     , A.EN_LOCKER
+		     , A.EN_GPNUM
+		     <![CDATA[
+		     , CASE
+		     		WHEN IFNULL(NULLIF(G.GP_NAME, ''), '') <> ''      THEN G.GP_NAME
+		     		WHEN IFNULL(NULLIF(CC.CD_CODE, ''), '') <> ''     THEN CC.CD_TITLE1
+		     		WHEN IFNULL(NULLIF(A.EN_SALE_DIV, ''), '') = '26' THEN '지역주민'
+		     		ELSE ''
+		       END AS GP_NAME
+		     ]]>
+		     , A.EN_MSNUM
+		     , B.BK_PART
+		     , B.BK_NAME
+		     , A.EN_CADDYNUM
+		     , NVL(C.CY_NAME, '') AS CY_NAME
+		     , A.EN_CARTNO
+		  FROM EN_HISTORY A 
+		 INNER JOIN BK_HISTORY B
+		    ON A.CO_DIV      = B.CO_DIV
+		   AND A.EN_DAY      = B.BK_DAY
+		   AND A.EN_COS      = B.BK_COS
+		   AND A.EN_TIME     = B.BK_TIME
+		 INNER JOIN CD_COMMON M
+		    ON A.CO_DIV      = M.CO_DIV
+		   AND A.EN_COS      = M.CD_CODE
+		   AND M.CD_DIVISION = '012'
+		  LEFT OUTER JOIN GP_MAININFO G
+		    ON A.EN_GPNUM    = G.GP_NUM
+		  LEFT OUTER JOIN CY_MAININFO C
+		    ON A.CO_DIV      = C.CO_DIV
+		   AND A.EN_CADDYNUM = C.CY_STAFFNO		   
+		  LEFT OUTER JOIN MS_MAININFO MS
+		    ON MS.MS_NUM    = A.EN_MSNUM
+		  LEFT OUTER JOIN CD_COMMON CC
+		    ON A.CO_DIV       = CC.CO_DIV
+		   AND MS.MS_CLASS    = CC.CD_CODE
+		   AND CC.CD_DIVISION = '006'
+		   AND CC.CD_CODE     IN ('15', '31')
+		 WHERE A.CO_DIV       = #{coDiv}
+		   AND A.EN_DAY       = DATE_FORMAT(NOW(), '%Y%m%d')
+		   <if test="cos != null and time != null">
+		   AND ((A.EN_COS     = #{cos} 
+		   AND A.EN_TIME      = #{time})
+		   		<if test='gpNum != null and !gpNum.equals("")'>
+	   		OR A.EN_GPNUM     = #{gpNum}
+		   		</if>
+		   )
+		   </if> 
+		   <if test="chkinNo != null">
+		   AND A.EN_CHKINNO   = #{chkinNo}
+		   AND IFNULL(NULLIF(EN_SALE_DIV, ''), '') <![CDATA[<>]]> ''
+		   </if> 	  	
+		   AND A.EN_PAYMENT   = 'N'
+		   AND A.EN_TIME      <![CDATA[<]]> '2500'
+		 ORDER BY A.EN_COS, A.EN_TIME
+	</select>
+	
+	<select id="makeSlNo" parameterType="hashmap" resultType="int">
+		SELECT NVL(MAX(SL_NO), 0) + 1
+		  FROM SL_MASTER
+		 WHERE CO_DIV  = #{coDiv}
+		   AND SL_SHOP = #{shop}
+		   AND SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')
+	</select>
+	
+	<select id="tableCheck" parameterType="hashmap" resultType="hashmap">
+		SELECT SL_TABLE_NO, SL_EN_NAME        
+		  FROM SL_MASTER              
+		 WHERE CO_DIV      = #{coDiv}
+		   AND SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')
+		   AND SL_SHOP     = #{shop}  
+		   AND SL_TABLE_NO = #{tableNo} 
+		   AND SL_STATE    = '1'  
+	</select>
+	
+	<select id="visitorCheck" parameterType="hashmap" resultType="int">
+		SELECT  COUNT(*)  CNT           
+		  FROM  EN_HISTORY              
+		 WHERE  CO_DIV     = #{coDiv}
+		   AND  EN_CHKINNO = #{enChkInNo}
+	</select>
+	
+	<select id="calculateCheck" parameterType="hashmap" resultType="String">
+		SELECT FN_JUNG_CHK(#{coDiv}, #{enDay}, #{enChkInNo}, #{ipAddr}) AS R_VALUE
+	</select>
+	
+	<select id="makeSlSeq" parameterType="hashmap" resultType="int">
+		SELECT  IFNULL(NULLIF(MAX(SL_SEQ), '') ,0) + 1 AS SL_SEQ 
+	      FROM  SL_HISTORY                                        
+	     WHERE  CO_DIV  = #{coDiv}                              
+	       AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP = #{shop}                                
+	       AND  SL_NO   = #{slNo}  
+	</select>
+	
+	<insert id="insSlMaster" parameterType="hashmap">
+		INSERT INTO SL_MASTER                                                                                                                             
+		(                                                                                                                                                 
+		    CO_DIV,          SL_DAY,          SL_SHOP,          SL_NO,          EN_CHKINNO,          CI_SEQ,          SL_GC_DIV,          SL_COS,           
+		    SL_TIME,         SL_EN_NAME,      SL_TABLE_NO,      SL_PAYDIV,      SL_TOTAL_AMOUNT,     GZ_COUPON_NO,    SL_STATE,           SL_VOID_REMARK,   
+		    SL_REMARK,       SL_INPUTTIME,    SL_TABLE_PERSON,  SL_ROUND,                                                                                  
+		    INPUT_STAFF,     INPUT_DATETIME,  INPUT_IP,         UPDATE_STAFF,   UPDATE_DATETIME,     UPDATE_IP                                             
+		)                                                                                                                                                 
+		VALUES                                                                                                                                            
+		(                                                                                                                                                 
+		    #{coDiv},	     DATE_FORMAT(NOW(), '%Y%m%d'),      #{shop},        #{slNo},         #{enChkInNo},          '1',         'G',         #{slCos},           
+		    #{slTime},       #{slEnName},     #{tableNo},       #{slPayDiv},     		0,                   		'',          '1',                '',   
+		    '',              DATE_FORMAT(NOW(), '%H%i' ),       #{slTablePerson},      #{slRound},                                                                     
+		    #{userId},       NOW(),           #{ipAddr},        #{userId},       NOW(),          #{ipAddr}                                                   
+		)  
+	</insert>
+	
+	<insert id="insSlHistory" parameterType="hashmap">
+		INSERT INTO SL_HISTORY                                                                                              
+		(
+		   CO_DIV,                SL_DAY,                       SL_SHOP,              SL_NO,                          SL_SEQ,           
+		   SL_PD_CD,              EN_CHKINNO,                   CI_SEQ,               SL_COUNT,                       SL_COST,          
+		   SL_VAT,                SL_AMOUNT,                    SL_PRICE,             SL_DC_RATE,                     SL_DC_AMT,        
+		   SL_ORDER,              SL_GUBUN,                     SL_PRINT,             SL_INPUTTIME,                   SL_REASON,        
+		   SL_SEAT_NO,            PD_TOT_AMT,                   PD_AMOUNT,            SL_DIS_AMT ,					  INPUT_STAFF,         
+		   INPUT_DATETIME,        INPUT_IP,			            UPDATE_STAFF,         UPDATE_DATETIME,     			  UPDATE_IP,            
+		   SL_CADDY,              SL_ID                     
+		)                                                                                                                   
+		VALUES                                                                                                              
+		(                                                                                                                   
+		   #{coDiv},              DATE_FORMAT(NOW(), '%Y%m%d'), #{shop},              #{slNo},                        #{slSeq},           
+		   #{pdCd},               #{enChkInNo},                 '1',            	  #{slCount},                     ABS(#{slCost}),     
+		   ABS(#{slVat}),         #{slAmount},                  ABS(#{slPrice}),      #{slRate},                      0,   
+		   '0',            		  #{slGubun},            	    'N',                  DATE_FORMAT(NOW(), '%H%i' ),    '',        
+		   NVL(#{seatNo}, '999'), 0,                            0,                    0,                              #{userId},          	  
+		   NOW(),                 #{ipAddr},                    #{userId},            NOW(),                          #{ipAddr},            
+		   'N',                   ''
+		)
+	</insert>
+	
+	<insert id="updTotalAmount" parameterType="hashmap">
+		UPDATE  SL_MASTER M                                              
+  	       SET  M.SL_TOTAL_AMOUNT = (SELECT  SUM(H.SL_AMOUNT)            
+	                                   FROM  SL_HISTORY H                
+	                                  WHERE  H.CO_DIV  = #{coDiv}                   
+	                                    AND  H.SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')
+	                                    AND  H.SL_SHOP = #{shop}
+	                                    AND  H.SL_NO   = #{slNo})   
+			 <if test="slTablePerson != null">
+			 ,  M.SL_TABLE_PERSON  = #{slTablePerson}
+			 </if>
+			 <if test="slRound != null">
+			 ,  M.SL_ROUND		   = #{slRound}
+			 </if>
+        	 ,  M.UPDATE_STAFF     = #{userId}
+        	 ,  M.UPDATE_DATETIME  = NOW()
+        	 ,  M.UPDATE_IP        = #{ipAddr}                       
+	     WHERE  M.CO_DIV       = #{coDiv}               
+	       AND  M.SL_DAY       = DATE_FORMAT(NOW(), '%Y%m%d')                       
+	       AND  M.SL_SHOP      = #{shop}                                
+	       AND  M.SL_NO        = #{slNo}
+	</insert>
+	
+	<select id="getOrder" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		  FROM (
+			SELECT E.CO_DIV
+				 , E.EN_CHKINNO
+				 , E.EN_DAY
+				 , E.EN_COS
+				 , C.CD_TITLE1 AS EN_COS_NM
+				 , E.EN_TIME
+				 , E.EN_NAME
+				 , E.EN_LOCKER
+				 , E.EN_GPNUM
+				 , G.GP_NAME
+				 , E.EN_MSNUM
+				 , B.BK_PART
+				 , B.BK_NAME
+				 , E.EN_CADDYNUM
+				 , M.CY_NAME
+				 , E.EN_CARTNO
+				 , S.SL_SEAT_NO
+				 , S.SL_SEQ
+				 , S.SL_PD_CD
+				 , P.PD_NAME
+				 , S.SL_COUNT
+			     , PC.PD_AMOUNT
+				 , S.SL_AMOUNT
+		 		 , S.SL_DC_RATE
+		 		 , S.SL_GUBUN
+		 		 , P.PRINT_YN
+		 		 , S.SL_CANCEL
+			  FROM SL_HISTORY S
+			 INNER JOIN EN_HISTORY E
+			    ON S.CO_DIV      = E.CO_DIV
+			   AND S.EN_CHKINNO  = E.EN_CHKINNO
+			  LEFT OUTER JOIN BK_HISTORY B
+			    ON E.CO_DIV      = B.CO_DIV
+			   AND E.EN_DAY      = B.BK_DAY
+			   AND E.EN_COS      = B.BK_COS
+			   AND E.EN_TIME     = B.BK_TIME
+			 INNER JOIN CD_COMMON C
+			    ON E.CO_DIV      = C.CO_DIV
+			   AND E.EN_COS      = C.CD_CODE
+			   AND C.CD_DIVISION = '012'
+			  LEFT OUTER JOIN GP_MAININFO G
+			    ON E.EN_GPNUM    = G.GP_NUM
+			  LEFT OUTER JOIN CY_MAININFO M
+				ON E.CO_DIV      = M.CO_DIV
+			   AND E.EN_CADDYNUM = M.CY_STAFFNO
+			  LEFT OUTER JOIN PD_CODE P
+			    ON S.CO_DIV      = P.CO_DIV
+			   AND S.SL_PD_CD    = P.PD_CD
+			  LEFT OUTER JOIN PD_COST PC
+			    ON S.CO_DIV 	 = PC.CO_DIV
+			   AND S.SL_PD_CD 	 = PC.PD_CD
+			   AND S.SL_SHOP 	 = PC.PD_SHOP
+			   AND PC.PD_DIV 	 = 1
+			 WHERE S.CO_DIV = #{coDiv} 
+			   AND S.SL_SHOP = #{shop}
+			   AND S.SL_DAY = #{slDay}
+			   AND S.SL_NO = #{slNo}
+			 UNION ALL
+			SELECT S.CO_DIV
+			     , H.EN_CHKINNO
+			     , H.SL_DAY AS EN_DAY 
+			     , H.SL_COS AS EN_COS
+			     , '' AS EN_COS_NM
+			     , H.SL_TIME AS EN_TIME
+			     , H.SL_EN_NAME AS EN_NAME
+			     , '' AS EN_LOCKER
+			     , '' AS EN_GPNUM
+			     , '' AS GP_NAME
+			     , '' AS EN_MSNUM
+			     , '' AS BK_PART
+			     , '' AS BK_NAME
+			     , '' AS EN_CADDYNUM
+			     , '' AS CY_NAME
+			     , '' AS EN_CARTNO
+			     , S.SL_SEAT_NO
+			     , S.SL_SEQ
+			     , S.SL_PD_CD
+			     , P.PD_NAME
+			     , S.SL_COUNT
+			     , PC.PD_AMOUNT
+			     , S.SL_AMOUNT
+			     , S.SL_DC_RATE
+		 		 , S.SL_GUBUN
+			     , P.PRINT_YN
+		 		 , S.SL_CANCEL
+			  FROM SL_MASTER H
+			 INNER JOIN SL_HISTORY S
+			    ON H.CO_DIV = S.CO_DIV
+			   AND H.SL_DAY = S.SL_DAY
+			   AND H.SL_SHOP = S.SL_SHOP
+			   AND H.SL_NO = S.SL_NO
+			   AND H.EN_CHKINNO = S.EN_CHKINNO
+			  LEFT OUTER JOIN PD_CODE P
+			    ON S.CO_DIV      = P.CO_DIV
+			   AND S.SL_PD_CD       = P.PD_CD
+			  LEFT OUTER JOIN PD_COST PC
+			    ON S.CO_DIV 	 = PC.CO_DIV
+			   AND S.SL_PD_CD 	 = PC.PD_CD
+			   AND S.SL_SHOP 	 = PC.PD_SHOP
+			   AND PC.PD_DIV 	 = 1
+			 WHERE H.CO_DIV = #{coDiv} 
+			   AND H.SL_SHOP = #{shop}
+			   AND H.SL_DAY = #{slDay}
+			   AND H.SL_NO = #{slNo}
+			   AND SUBSTR(H.EN_CHKINNO, 1, 1) = 'S'
+			   AND H.SL_PAYDIV = '2'
+		  ) T
+		 ORDER BY T.SL_SEAT_NO, T.SL_SEQ
+	</select>
+	
+	<select id="makeSlMasterLogSeq" parameterType="hashmap" resultType="int">
+		SELECT  NVL(MAX(SL_LOG_SEQ), 0) + 1 AS LOG_SEQ 
+    	  FROM  SL_MASTER_LOG                                       
+	     WHERE  CO_DIV  = #{coDiv}                              
+	       AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP = #{shop}                                
+	       AND  SL_NO   = #{slNo}  
+	</select>
+	
+	<insert id="insSlMasterLog" parameterType="hashmap">
+		INSERT INTO SL_MASTER_LOG                                                                                   
+		(                                                                                                           
+		   CO_DIV,           SL_LOG_SEQ,           SL_DAY,           SL_SHOP,           SL_NO,           EN_CHKINNO,  
+		   CI_SEQ,           SL_EN_NAME,           SL_PAYDIV,        SL_TOTAL_AMOUNT,   SL_STATE,        SL_COS,      
+		   SL_TIME,          SL_VOID_REMARK,       SL_REMARK,        SL_INPUTTIME,      SL_LOG_DIV,                   
+		   INPUT_STAFF,      INPUT_DATETIME,       INPUT_IP,         UPDATE_STAFF,      UPDATE_DATETIME, UPDATE_IP    
+		  )                                                                                                           
+		SELECT                                                                                                      
+		   CO_DIV,           #{logSeq},            SL_DAY,           SL_SHOP,           SL_NO,           EN_CHKINNO,  
+		   CI_SEQ,           SL_EN_NAME,           SL_PAYDIV,        SL_TOTAL_AMOUNT,   SL_STATE,        SL_COS,      
+		   SL_TIME,          SL_VOID_REMARK,       SL_REMARK,        SL_INPUTTIME,      #{type},                  
+		   INPUT_STAFF,      INPUT_DATETIME,       INPUT_IP,         UPDATE_STAFF,      UPDATE_DATETIME, UPDATE_IP    
+		  FROM  SL_MASTER                                       
+	     WHERE  CO_DIV  = #{coDiv}                              
+	       AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP = #{shop}                                
+	       AND  SL_NO   = #{slNo} 
+	</insert>
+	
+	<select id="makeSlHistoryLogSeq" parameterType="hashmap" resultType="int">
+		SELECT  NVL(MAX(SL_LOG_SEQ), 0) + 1 AS LOG_SEQ 
+    	  FROM  SL_HISTORY_LOG                                       
+	     WHERE  CO_DIV  = #{coDiv}                              
+	       AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP = #{shop}                                
+	       AND  SL_NO   = #{slNo}  
+	</select>
+	
+	<insert id="insSlHistoryLog" parameterType="hashmap">
+		INSERT INTO SL_HISTORY_LOG                                                                                                                        
+		(                                                                                                                                                 
+		    CO_DIV,           SL_LOG_SEQ,           SL_DAY,           SL_SHOP,           SL_NO,           SL_PD_CD,           SL_SEQ,           EN_CHKINNO, 
+		    CI_SEQ,           SL_COUNT,             SL_COST,          SL_VAT,            SL_AMOUNT,       SL_PRICE,           SL_DC_RATE,       SL_DC_AMT,  
+		    SL_ORDER,         SL_GUBUN,             SL_PRINT,         SL_INPUTTIME,      SL_REASON,                                                         
+		    INPUT_STAFF,      INPUT_DATETIME,       INPUT_IP,         UPDATE_STAFF,      UPDATE_DATETIME, UPDATE_IP,          SL_LOG_DIV                    
+		)                                                                                                                                                 
+		  SELECT                                                                                                                                            
+		    CO_DIV,           #{logSeq},            SL_DAY,           SL_SHOP,           SL_NO,           SL_PD_CD,           SL_SEQ,           EN_CHKINNO, 
+		    CI_SEQ,           SL_COUNT,             SL_COST,          SL_VAT,            SL_AMOUNT,       SL_PRICE,           SL_DC_RATE,       SL_DC_AMT,  
+		    SL_ORDER,         SL_GUBUN,             SL_PRINT,         SL_INPUTTIME,      SL_REASON,                                                         
+		    INPUT_STAFF,      INPUT_DATETIME,       INPUT_IP,         UPDATE_STAFF,      UPDATE_DATETIME, UPDATE_IP,          #{type}                   
+		  FROM SL_HISTORY                                         
+	     WHERE  CO_DIV  = #{coDiv}                              
+	       AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP = #{shop}                                
+	       AND  SL_NO   = #{slNo}
+		 <if test="newSlSeq != null">
+	       AND  SL_SEQ  = #{newSlSeq}
+	     </if>
+	</insert>
+	
+	<select id="getPersonTotalAmt" parameterType="hashmap" resultType="int">
+		SELECT  NVL(SUM(SL_AMOUNT), 0)
+	      FROM  SL_HISTORY                                              
+	     WHERE  CO_DIV  	= #{coDiv}                              
+	       AND  SL_DAY  	= DATE_FORMAT(NOW(), '%Y%m%d')                    
+	       AND  SL_SHOP 	= #{shop}                                
+	       AND  SL_NO   	= #{slNo}              
+	       AND  EN_CHKINNO  = #{enChkInNo}                            
+	       AND  NVL(SL_ID, 'N') <![CDATA[<>]]> 'Y' 
+	</select>
+	
+	<insert id="updAjHistory" parameterType="hashmap">
+		UPDATE  AJ_HISTORY
+		SET CO_DIV = CO_DIV
+		<choose>
+            <when test="shop == 11">
+      	  , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL  + #{totalAmt}
+          , AJ_CLUB_AMOUNT   = AJ_CLUB_AMOUNT + #{totalAmt} 
+            </when>
+            <when test="shop == 12">
+          , AJ_PRO_AMOUNT    = AJ_PRO_AMOUNT + #{totalAmt}
+            </when>
+            <when test="shop == 21">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_START1_AMOUNT = AJ_START1_AMOUNT + #{totalAmt}
+            </when>
+            <when test="shop == 22">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP1_AMOUNT  = AJ_SHOP1_AMOUNT  + #{totalAmt}
+            </when>
+            <when test="shop == 23">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP2_AMOUNT  = AJ_SHOP2_AMOUNT  + #{totalAmt}
+            </when>
+            <when test="shop == 24">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP3_AMOUNT  = AJ_SHOP3_AMOUNT  + #{totalAmt}  
+            </when>
+            <when test="shop == 31">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_START2_AMOUNT = AJ_START2_AMOUNT + #{totalAmt} 
+            </when>
+            <when test="shop == 32">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP3_AMOUNT  = AJ_SHOP3_AMOUNT  + #{totalAmt}
+            </when>
+            <when test="shop == 33">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP4_AMOUNT  = AJ_SHOP4_AMOUNT  + #{totalAmt}  
+            </when>
+            <when test="shop == 81">
+          , AJ_SHOP_TOTAL    = AJ_SHOP_TOTAL    + #{totalAmt}
+          , AJ_SHOP3_AMOUNT  = AJ_SHOP3_AMOUNT  + #{totalAmt}
+            </when>
+            <otherwise>
+          , AJ_SHOP_TOTAL   = AJ_SHOP_TOTAL + #{totalAmt}
+          , AJ_ETC_AMOUNT   = AJ_ETC_AMOUNT + #{totalAmt}
+            </otherwise>
+        </choose>
+    	 WHERE  CO_DIV     = #{coDiv}     
+           AND  EN_CHKINNO = #{enChkInNo}
+           AND  AJ_DAY     = DATE_FORMAT(NOW(), '%Y%m%d')   
+	</insert>
+	
+	<insert id="updAjTotalAmount" parameterType="hashmap">
+		UPDATE  AJ_HISTORY                          
+	       SET  AJ_TOTAL_AMOUNT  = AJ_GREEN_AMOUNT  
+	                             + AJ_CART_AMOUNT   
+	                             + AJ_RENT_AMOUNT   
+	                             + AJ_PRO_AMOUNT    
+	                             + AJ_CLUB_AMOUNT   
+	                             + AJ_START1_AMOUNT 
+	                             + AJ_START2_AMOUNT 
+	                             + AJ_SHOP1_AMOUNT  
+	                             + AJ_SHOP2_AMOUNT  
+	                             + AJ_SHOP3_AMOUNT  
+	                             + AJ_SHOP4_AMOUNT  
+	                             + AJ_ROOM_AMOUNT   
+	                             + AJ_ETC_AMOUNT    
+	                             - AJ_DISCOUNT_AMT            
+    	 WHERE  CO_DIV     = #{coDiv}     
+           AND  EN_CHKINNO = #{enChkInNo}
+           AND  AJ_DAY     = DATE_FORMAT(NOW(), '%Y%m%d')   
+	</insert>
+	
+	<insert id="updSlHistoryCalYn" parameterType="hashmap">
+		UPDATE  SL_HISTORY                      
+	       SET  SL_ID = 'Y'                             
+    	 WHERE  CO_DIV     = #{coDiv}     
+           AND  EN_CHKINNO = #{enChkInNo}
+           AND  SL_DAY     = DATE_FORMAT(NOW(), '%Y%m%d')          
+	       AND  SL_SHOP    = #{shop}           
+	       AND  SL_NO      = #{slNo}   
+	</insert>
+	
+	<insert id="delSlHistory" parameterType="hashmap">
+		INSERT INTO SL_HISTORY                                                                                              
+		(                                                                                                                   
+		 CO_DIV,           SL_DAY,              SL_SHOP,            SL_NO,                                SL_SEQ,           
+		 SL_PD_CD,         EN_CHKINNO,          CI_SEQ,             SL_COUNT,                             SL_COST,          
+		 SL_VAT,           SL_AMOUNT,           SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,        
+		 SL_ORDER,         SL_GUBUN,            SL_PRINT,           SL_INPUTTIME,                         SL_REASON,        
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           SL_SEAT_NO,                                                        
+		 UPDATE_STAFF,     UPDATE_DATETIME,     UPDATE_IP,          SL_CANCEL                                                                   
+		)                                                                                                                   
+		 SELECT                                                                                                             
+		 CO_DIV,           SL_DAY,              SL_SHOP,            SL_NO,                                (SL_SEQ + #{slSeq}),
+		 SL_PD_CD,         EN_CHKINNO,          CI_SEQ,             SL_COUNT * -1,                        SL_COST,          
+		 SL_VAT,           SL_AMOUNT*-1,        SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,        
+		 'C',              SL_GUBUN,            'N',                DATE_FORMAT(NOW(), '%H%i' ),          SL_REASON,        
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           SL_SEAT_NO,                                                        
+		 #{userId},        NOW(),               #{ipAddr},          'Y'                                                                       
+		  FROM  SL_HISTORY                                                                                                  
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{slNo}    
+	</insert>
+	
+	<update id="delSlHistory2" parameterType="hashmap">
+		UPDATE SL_HISTORY
+		   SET SL_CANCEL = 'Y'                                                                                                 
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{slNo}    
+	</update>
+	
+	<insert id="delSlMaster" parameterType="hashmap">
+		UPDATE  SL_MASTER
+		   SET  SL_STATE = '3'                                                                                            
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{slNo}    
+	</insert>
+	
+	<select id="checkTableSales" parameterType="hashmap" resultType="int">
+		SELECT  COUNT(*)   CNT
+		  FROM  SL_MASTER
+		 WHERE  CO_DIV      = #{coDiv}   
+		   AND  SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')    
+		   AND  SL_SHOP     = #{shop} 
+		   AND  SL_TABLE_NO = #{tableNo}
+		   AND  SL_STATE    = '1' 
+	</select>
+	
+	<select id="checkTableGallery" parameterType="hashmap" resultType="hashmap">
+		SELECT  SL_TIME, SUBSTR(EN_CHKINNO, 1, 1) AS EN_CHKINNO
+		  FROM  SL_MASTER
+		 WHERE  CO_DIV      = #{coDiv}   
+		   AND  SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')    
+		   AND  SL_SHOP     = #{shop} 
+		   AND  SL_TABLE_NO = #{tableNo}
+		   AND  SL_STATE    = '1' 
+	</select>
+	
+	<select id="getMaxSeatNo" parameterType="hashmap" resultType="int">
+		SELECT  MAX(SL_SEAT_NO)
+		  FROM  SL_HISTORY
+		 WHERE  CO_DIV      = #{coDiv}   
+		   AND  SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')    
+		   AND  SL_SHOP     = #{shop} 
+		   AND  SL_NO       = #{aSlNo}
+		   AND  SL_SEAT_NO  <![CDATA[<>]]> '999'
+	</select>
+	
+	<insert id="actionCalculate" parameterType="hashmap">
+		UPDATE  SL_MASTER                
+		   SET  SL_STATE        = '2', 
+		        UPDATE_DATETIME = NOW(), 
+		        UPDATE_STAFF    = #{userId}, 
+		        UPDATE_IP       = #{ipAddr}
+		 WHERE  CO_DIV   = #{coDiv}   
+		   AND  SL_DAY   = DATE_FORMAT(NOW(), '%Y%m%d')    
+		   AND  SL_SHOP  = #{shop}       
+		   AND  SL_NO    = #{slNo}    
+		   AND  SL_STATE = '1'    
+	</insert>
+	
+	<insert id="moveTable" parameterType="hashmap">
+		UPDATE  SL_MASTER                     
+		   SET  SL_TABLE_NO     = #{tableNo},
+		        UPDATE_DATETIME = NOW(),      
+		        UPDATE_STAFF    = #{userId},      
+		        UPDATE_IP       = #{ipAddr}
+		 WHERE  CO_DIV   = #{coDiv}   
+		   AND  SL_DAY   = DATE_FORMAT(NOW(), '%Y%m%d')    
+		   AND  SL_SHOP  = #{shop}       
+		   AND  SL_NO    = #{slNo}      
+	</insert>
+	
+	<insert id="mergeTable" parameterType="hashmap">
+		INSERT INTO SL_HISTORY                                                                                                 
+		(                                                                                                                      
+		 CO_DIV,           SL_DAY,              SL_SHOP,            SL_NO,                                SL_SEQ,              
+		 SL_PD_CD,         EN_CHKINNO,          CI_SEQ,             SL_COUNT,                             SL_COST,             
+		 SL_VAT,           SL_AMOUNT,           SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,           
+		 SL_ORDER,         SL_GUBUN,            SL_PRINT,           SL_INPUTTIME,                         SL_REASON,           
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           SL_SEAT_NO,                           SL_ID,                                
+		 UPDATE_STAFF,     UPDATE_DATETIME,     UPDATE_IP                                                                      
+		)                                                                                                                      
+		 SELECT                                                                                                                
+		 CO_DIV,           SL_DAY,              SL_SHOP,            #{aSlNo},                         	  (SL_SEQ + #{slSeq}),   
+		 SL_PD_CD,         EN_CHKINNO,       	CI_SEQ,             SL_COUNT,                             SL_COST,             
+		 SL_VAT,           SL_AMOUNT,           SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,           
+		 SL_ORDER,         SL_GUBUN,            SL_PRINT,           DATE_FORMAT(NOW(),'%H%i'),            SL_REASON,           
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           (SL_SEAT_NO + #{seatNo}),             SL_ID,                                              
+		 #{userId},        NOW()  ,             #{ipAddr}                                                                          
+		  FROM  SL_HISTORY                                                                                                    
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{bSlNo}    
+	</insert>
+	
+	<delete id="deleteSlHistory" parameterType="hashmap">
+		DELETE                                                                                        
+		  FROM  SL_HISTORY                                                                                                  
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{bSlNo}    
+	</delete>
+	
+	<delete id="deleteSlMaster" parameterType="hashmap">
+		UPDATE  SL_MASTER M                                               
+		   SET  M.SL_TOTAL_AMOUNT = (SELECT  NVL(SUM(H.SL_AMOUNT), 0)      
+		                               FROM  SL_HISTORY H                 
+		                              WHERE  H.CO_DIV     = M.CO_DIV      
+		                                AND  H.EN_CHKINNO = M.EN_CHKINNO  
+		                                AND  H.SL_DAY     = M.SL_DAY      
+		                                AND  H.SL_SHOP    = M.SL_SHOP     
+		                                AND  H.SL_NO      = M.SL_NO       
+		                            )                                     
+		        ,M.SL_STATE        = '3'                                
+		        ,M.SL_VOID_REMARK = '합석'                                                                                              
+		 WHERE  M.CO_DIV  = #{coDiv}                                                                       
+		   AND  M.SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  M.SL_SHOP = #{shop}                                                                                          
+		   AND  M.SL_NO   = #{bSlNo}   
+	</delete>
+	
+	<select id="getRestoreList" parameterType="hashmap" resultType="hashmap">
+		SELECT  EN.EN_DAY
+				,CD_TITLE1      COS_NM                                            
+		        ,EN.EN_TIME                                                      
+		        ,EN.EN_LOCKER                                                    
+		        ,EN.EN_NAME                                                      
+		        ,EN.EN_CHKINNO                                                   
+		        ,SL.SL_NO                                                        
+		        ,SL.SL_TOTAL_AMOUNT                                              
+		  FROM  EN_HISTORY EN                                                    
+		        ,(SELECT  CO_DIV, SL_DAY, EN_CHKINNO, SL_NO, SL_TOTAL_AMOUNT     
+		            FROM  SL_MASTER   SL                                         
+		           WHERE  SL.CO_DIV      = #{coDiv}                              
+		             AND  SL.SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')                                
+		             AND  SL.SL_SHOP     = #{shop}                               
+		             AND  SL.SL_TABLE_NO = #{tableNo}                           
+		             AND  SL.SL_STATE    = '2'                                 
+		        )  SL                                                            
+		        ,(SELECT  CO_DIV, CD_CODE, CD_TITLE1                             
+		            FROM  CD_COMMON                                              
+		           WHERE  CO_DIV      = #{coDiv}                                 
+		             AND  CD_DIVISION = '012'                                  
+		        ) COS_NAME                                                       
+		 WHERE  EN.CO_DIV                = #{coDiv}                              
+		   AND  EN.EN_DAY                = DATE_FORMAT(NOW(), '%Y%m%d')                                
+		   AND  IFNULL(NULLIF(EN.EN_PAYMENT,''),'N') = 'N'                 
+		   AND  EN.CO_DIV                = SL.CO_DIV                             
+		   AND  EN.EN_DAY                = SL.SL_DAY                             
+		   AND  EN.EN_CHKINNO            = SL.EN_CHKINNO                         
+		   AND  EN.CO_DIV                = COS_NAME.CO_DIV                       
+		   AND  EN.EN_COS                = COS_NAME.CD_CODE                      
+		 UNION  ALL                                                              
+		SELECT  DATE_FORMAT(NOW(), '%Y%m%d') AS EN_DAY
+			 	,''              COS_NM                                           
+		        ,''             EN_TIME                                          
+		        ,''             EN_LOCKER                                        
+		        ,H.GUEST_NAME   GUEST_NAME                                       
+		        ,H.RSV_NO       RSV_NO                                           
+		        ,SL.SL_NO                                                        
+		        ,SL.SL_TOTAL_AMOUNT                                              
+		  FROM  HREGIHIST  H                                                     
+		        ,(SELECT  CO_DIV, SL_DAY, EN_CHKINNO, SL_NO                      
+		                  ,SL_TOTAL_AMOUNT, SL_COS, SL_TIME, CI_SEQ              
+		            FROM  SL_MASTER   SL                                         
+		           WHERE  SL.CO_DIV      = #{coDiv}                              
+		             AND  SL.SL_DAY      = DATE_FORMAT(NOW(), '%Y%m%d')                                
+		             AND  SL.SL_SHOP     = #{shop}                               
+		             AND  SL.SL_TABLE_NO = #{tableNo}                           
+		             AND  SL.SL_STATE    = '2'                                 
+		        )  SL                                                            
+		 WHERE  H.CO_DIV = SL.CO_DIV                                             
+		   AND  H.RSV_NO = SL.EN_CHKINNO                                         
+		   AND  H.CI_SEQ = SL.CI_SEQ                                             
+		   AND  DATE_FORMAT(NOW(), '%Y%m%d')   BETWEEN H.CI_DAY AND H.CO_DAY                           
+		 UNION  ALL                                                              
+		SELECT  SL.SL_DAY AS EN_DAY
+				,SL.SL_COS        COS_NM                                            
+		        ,SL.SL_TIME      SL_TIME                                           
+		        ,'9999'          EN_LOCKER                                         
+		        ,SL.SL_EN_NAME                                                   
+		        ,SL.EN_CHKINNO                                                   
+		        ,SL.SL_NO                                                        
+		        ,SL.SL_TOTAL_AMOUNT                                              
+		  FROM SL_MASTER SL                                                      
+		 WHERE SL.CO_DIV                 = #{coDiv}                              
+		   AND SL.SL_DAY                 = DATE_FORMAT(NOW(), '%Y%m%d')                                
+		   AND SL.SL_SHOP                = #{shop}                               
+		   AND SL.SL_TABLE_NO            = #{tableNo}                           
+		   AND SL.SL_STATE               = '2'                                 
+		   AND SUBSTR(SL.EN_CHKINNO,1,1) = 'S'
+	</select>
+	
+	<update id="actionRestore" parameterType="hashmap">  
+		UPDATE  SL_MASTER                
+	       SET  SL_STATE        = '1', 
+	            UPDATE_DATETIME = NOW(), 
+	            UPDATE_STAFF    = #{userId}, 
+	            UPDATE_IP       = #{ipAddr}  
+	     WHERE  CO_DIV   = #{coDiv}   
+	       AND  SL_DAY   = DATE_FORMAT(NOW(), '%Y%m%d')        
+  	       AND  SL_SHOP  = #{shop} 
+           AND  SL_NO    = #{slNo}   
+	</update>
+	
+	<insert id="delProduct" parameterType="hashmap">
+		INSERT INTO SL_HISTORY                                                                                              
+		(                                                                                                                   
+		 CO_DIV,           SL_DAY,              SL_SHOP,            SL_NO,                                SL_SEQ,           
+		 SL_PD_CD,         EN_CHKINNO,          CI_SEQ,             SL_COUNT,                             SL_COST,          
+		 SL_VAT,           SL_AMOUNT,           SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,        
+		 SL_ORDER,         SL_GUBUN,            SL_PRINT,           SL_INPUTTIME,                         SL_REASON,        
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           SL_SEAT_NO,                                                        
+		 UPDATE_STAFF,     UPDATE_DATETIME,     UPDATE_IP,          SL_CANCEL                                                                   
+		)                                                                                                                   
+		 SELECT                                                                                                             
+		 CO_DIV,           SL_DAY,              SL_SHOP,            SL_NO,                                #{newSlSeq},
+		 SL_PD_CD,         EN_CHKINNO,          CI_SEQ,             SL_COUNT * -1,                        SL_COST,          
+		 SL_VAT,           SL_AMOUNT*-1,        SL_PRICE,           SL_DC_RATE,                           SL_DC_AMT,        
+		 'I',              SL_GUBUN,            'N',                DATE_FORMAT(NOW(), '%H%i' ),          SL_REASON,        
+		 INPUT_STAFF,      INPUT_DATETIME,      INPUT_IP,           SL_SEAT_NO,                                                                   
+		 #{userId},        NOW(),               #{ipAddr},          'Y'                                                                       
+		  FROM  SL_HISTORY                                                                                                  
+		 WHERE  CO_DIV  = #{coDiv}                                                                       
+		   AND  SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND  SL_SHOP = #{shop}                                                                                          
+		   AND  SL_NO   = #{slNo}   
+		   AND  SL_SEQ  = #{slSeq}
+		   AND  SL_PD_CD = #{slPdCd} 
+	</insert>
+	
+	<update id="delProduct2" parameterType="hashmap">
+		UPDATE SL_HISTORY
+		   SET SL_CANCEL = 'Y'                                                                                               
+		 WHERE CO_DIV  = #{coDiv}                                                                       
+		   AND SL_DAY  = DATE_FORMAT(NOW(), '%Y%m%d')                                                                                       
+		   AND SL_SHOP = #{shop}                                                                                          
+		   AND SL_NO   = #{slNo}   
+		   AND SL_SEQ  = #{slSeq}
+		   AND SL_PD_CD = #{slPdCd} 
+	</update>
+	
+	<insert id="setPrinterRelay" parameterType="hashmap">
+		INSERT INTO CD_COMMON (
+			CO_DIV
+			,CD_DIVISION
+			,CD_CODE
+			,CD_TITLE1
+			,CD_USEYN
+			,INPUT_STAFF
+			,INPUT_DATETIME
+			,INPUT_IP
+			,UPDATE_STAFF
+			,UPDATE_DATETIME
+			,UPDATE_IP
+		) VALUES (
+			#{coDiv}
+			,'FNB_TOKEN'
+			,#{shop}
+			,#{token}
+			,'Y'
+			,#{userId}
+			,NOW()
+			,#{ipAddr}
+			,#{userId}
+			,NOW()
+			,#{ipAddr}
+		) ON DUPLICATE KEY UPDATE
+			CD_TITLE1 = #{token}
+			,UPDATE_STAFF = #{userId}
+			,UPDATE_DATETIME = NOW()
+			,UPDATE_IP = #{ipAddr}
+	</insert>
+	
+	<select id="getPrinterToken" parameterType="hashmap" resultType="String">
+		SELECT CD_TITLE1 AS TOKEN
+		  FROM CD_COMMON
+		 WHERE CO_DIV = #{coDiv}
+		   AND CD_DIVISION = 'FNB_TOKEN'
+		   AND CD_CODE = #{shop}
+	</select>
+	
+	<select id="makeGalleryTime" parameterType="hashmap" resultType="hashmap">
+		SELECT  IFNULL(NULLIF(SUBSTR(MAX(EN_TIME), 1, 2),''), '25')    		  AS TIME_NUM
+		        ,CONCAT(IFNULL(NULLIF(SUBSTR(MAX(EN_TIME), 3, 2),''), 0) + 1) AS NUM     
+		  FROM  EN_HISTORY                                                         
+		 WHERE  CO_DIV                  = #{coDiv}                         
+		   AND  EN_DAY                  = DATE_FORMAT(NOW(), '%Y%m%d')                
+		   AND  EN_COS                  = 'A'                                    
+		   AND  EN_TIME                 > '2500'                                 
+		   AND  SUBSTR(EN_LOCKER, 1, 1) = 'G'
+	</select>
+	
+	<select id="makeGalleryLocker" parameterType="hashmap" resultType="String">
+		SELECT  CONCAT('G', LPAD(IFNULL(NULLIF(MAX(SUBSTR(EN_LOCKER, 2, 3)), 0) + 1, ''), 3, '0'))
+		  FROM  EN_HISTORY                                          
+		 WHERE  EN_DAY                  = DATE_FORMAT(NOW(), '%Y%m%d')                                                  
+		   AND  CO_DIV                  = #{coDiv}                                               
+		   AND  EN_COS                  = 'A'                                                    
+		   AND  SUBSTR(EN_LOCKER, 1, 1) = 'G'
+	</select>
+	
+	<select id="makeGalleryChkInNo" parameterType="hashmap" resultType="String">
+		SELECT  NEXTVAL(#{coDiv}, #{type}, 'EN_HISTORY_SEQ')
+	</select>
+	
+	<insert id="makeGallery" parameterType="hashmap">
+		INSERT INTO EN_HISTORY                                                                                                                                          
+		(                                                                                                                                                               
+		  CO_DIV,          EN_CHKINNO,          EN_DAY,          EN_COS,          EN_TIME,          EN_NAME,          EN_PAYCLOSE,          EN_HOLE,          EN_ROUND, 
+		  EN_LOCKER,       EN_SEX,              EN_FOREIGN,      EN_PAYMENT,      EN_RETURN,        EN_CHKIN_YN,      EN_GPNUM,                                         
+		  INPUT_STAFF,     INPUT_DATETIME,      INPUT_IP,        UPDATE_STAFF,    UPDATE_DATETIME,  UPDATE_IP                                                           
+		)                                                                                                                                                               
+		VALUES                                                                                                                                                          
+		(                                                                                                                                                               
+		  #{coDiv},        #{enChkInNo},        #{enDay},        'A',             #{enTime},        #{enName},        '',                   '18',            '1', 
+		  #{enLocker},     '1',                 '1',             'N',             'N',              'Y',              '',                                      
+		  #{userId},       NOW(),               #{ipAddr},       #{userId},       NOW(),            #{ipAddr}                                                              
+		) 
+	</insert>
+	
+	<select id="makePrinterSeq" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(NULLIF(MAX(FB_SEQ), 0), 0) + 1 AS SEQ
+		  FROM FB_RECEIPT
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+	</select>
+	
+	<insert id="insFnbReceipt" parameterType="hashmap">
+		INSERT INTO FB_RECEIPT (
+			FB_CODIV
+		  , FB_SHOP
+		  , FB_DATE
+		  , FB_SEQ
+		  , FB_SL_NO
+		  , FB_AGAIN_YN
+		  , FB_CONTENT
+		  , FB_PRINT_YN
+		  , INPUT_DATETIME
+		  , INPUT_STAFF
+		  , INPUT_IP
+		  , UPDATE_DATETIME
+		  , UPDATE_STAFF
+		  , UPDATE_IP
+		) VALUES (
+			#{coDiv}
+		  , #{shop}
+		  , DATE_FORMAT(NOW(), '%Y%m%d')
+		  , #{seq}
+		  , #{slNo}
+		  , #{againYn}
+		  , #{content}
+		  , 'N'
+		  , NOW()
+		  , #{userId}
+		  , #{ipAddr}
+		  , NOW()
+		  , #{userId}
+		  , #{ipAddr}
+		)
+	</insert>
+	
+	<select id="getLatelyReceiptData" parameterType="hashmap" resultType="hashmap">
+		SELECT FB_CODIV AS coDiv,
+               FB_SHOP AS shop,
+               FB_DATE AS date,
+               FB_SEQ AS seq
+          FROM FB_RECEIPT
+         WHERE     FB_CODIV = #{coDiv}
+               AND FB_SHOP = #{shop}
+               AND FB_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+               AND FB_SL_NO = #{slNo}
+			   AND FB_AGAIN_YN = 'N'
+      ORDER BY INPUT_DATETIME DESC
+         LIMIT 1
+	</select>
+	
+	<insert id="updFnbReceipt" parameterType="hashmap">
+		UPDATE FB_RECEIPT
+		   SET FB_PRINT_YN = 'N'
+		     , FB_LOCKTIME = NULL
+		     , UPDATE_DATETIME = NOW()
+		     , UPDATE_STAFF = #{userId}
+		     , UPDATE_IP = #{ipAddr}
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = #{date}
+		   AND FB_SEQ = #{seq}
+	</insert>
+	
+	<select id="getReceiptData" parameterType="hashmap" resultType="hashmap">
+		SELECT FB_CODIV
+			 , FB_SHOP
+			 , FB_DATE
+			 , FB_SEQ
+			 , FB_CONTENT
+			 , INPUT_DATETIME
+		  FROM FB_RECEIPT
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+		   AND NVL(FB_PRINT_YN, 'N') = 'N'	
+		   AND (TIMESTAMPDIFF(MINUTE, NVL(FB_LOCKTIME, NOW()), NOW()) > 1 OR NVL(FB_LOCKTIME, '') = '')		 
+	</select>
+	
+	<select id="getReceiptList" parameterType="hashmap" resultType="hashmap">
+		SELECT F.FB_SEQ
+			 , F.FB_DATE
+			 , DATE_FORMAT(F.INPUT_DATETIME, '%H:%i:%s') AS INPUT_DATETIME
+			 , NVL(F.FB_PRINT_YN, 'N') AS FB_PRINT_YN
+			 , F.FB_CONTENT
+		  FROM FB_RECEIPT F
+		 WHERE F.FB_CODIV = #{coDiv}
+		   AND F.FB_SHOP = #{shop}
+		   AND F.FB_DATE = DATE_FORMAT(NOW(), '%Y%m%d')
+		 ORDER BY F.FB_SEQ DESC
+	</select>
+	
+	<insert id="uptReceiptLocktime" parameterType="hashmap">
+		UPDATE FB_RECEIPT
+		   SET FB_LOCKTIME = NOW()
+		     , UPDATE_DATETIME = NOW()
+		     , UPDATE_STAFF = #{userId}
+		     , UPDATE_IP = #{ipAddr}
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = #{date}
+		   AND FB_SEQ = #{seq}
+	</insert>
+	
+	<select id="sucReceiptPrint" parameterType="hashmap" resultType="hashmap">
+		UPDATE FB_RECEIPT
+		   SET FB_PRINT_YN = 'Y'
+		     , UPDATE_DATETIME = NOW()
+		     , UPDATE_STAFF = #{userId}
+		     , UPDATE_IP = #{ipAddr}
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = #{date}
+		   AND FB_SEQ = #{seq}			 
+	</select>
+	
+	<select id="cancelReceipt" parameterType="hashmap" resultType="hashmap">
+		UPDATE FB_RECEIPT
+		   SET FB_PRINT_YN = 'C'
+		     , UPDATE_DATETIME = NOW()
+		     , UPDATE_STAFF = #{userId}
+		     , UPDATE_IP = #{ipAddr}
+		 WHERE FB_CODIV = #{coDiv}
+		   AND FB_SHOP = #{shop}
+		   AND FB_DATE = #{date}
+		   AND FB_SEQ = #{seq}			 
+	</select>
+	
+	<select id="getKitchenOrder" parameterType="hashmap" resultType="hashmap">
+		SELECT SM.SL_NO
+			 , ST.SL_TABLE_NAME
+			 , PC.PD_NAME
+			 , SH.SL_COUNT
+			 , SH.SL_KITCHEN_STATUS
+		  FROM SL_MASTER SM
+		 INNER JOIN SL_HISTORY SH
+		    ON SM.CO_DIV = SH.CO_DIV
+		   AND SM.SL_DAY = SH.SL_DAY
+		   AND SM.SL_SHOP = SH.SL_SHOP
+		   AND SM.SL_NO = SH.SL_NO 
+		 INNER JOIN SL_TABLE ST
+		    ON SM.CO_DIV = ST.CO_DIV
+		   AND SM.SL_SHOP = ST.SL_SHOP
+		   AND SM.SL_TABLE_NO = ST.SL_TABLE_NO 
+		 INNER JOIN PD_CODE PC
+		    ON SM.CO_DIV = PC.CO_DIV
+		   AND SH.SL_PD_CD = PC.PD_CD
+		 WHERE SM.CO_DIV = #{coDiv}
+		   AND SM.SL_DAY = #{slDay}
+		   AND SM.SL_SHOP = #{shop}
+		   AND SM.SL_NO = #{slNo}
+		 ORDER BY SH.SL_SEQ
+	</select> 
+	
+	<select id="chkSlState" parameterType="hashmap" resultType="String">
+		SELECT SL_STATE
+		  FROM SL_MASTER
+		 WHERE CO_DIV = #{coDiv}
+		   AND SL_DAY = DATE_FORMAT(NOW(), '%Y%m%d')
+		   AND SL_SHOP = #{shop}
+		   AND SL_NO = #{slNo}
+	</select>
+	
+</mapper>

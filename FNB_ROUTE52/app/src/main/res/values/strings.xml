@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">FNB ROUTE52</string>
+
+    <!--Url-->
+    <string name="host">http://itsone.iptime.org/fnb/</string>
+
+    <string name="image_host">https://kr.object.ncloudstorage.com/fnb/%s/%s</string>
+
+    <string name="fcm_message_url">https://fcm.googleapis.com/fcm/send</string>
+    <string name="fcm_server_key">AAAAldWVVKw:APA91bHFMjnFZHhf03uyqm4auyJ1rh8zIk4HHCQt6T_xFJWPTlGvAjKIRyP9ovdJmm8GBFQIUbjXXbzLny4WBYzz4Fn2-SBWQL56ByrBHg1ydED7xblkc0sJQG1RQfIQUGw9lEz0KHSn</string>
+
+    <!--데이터 다운로드-->
+    <string name="versionCheck">versionCheck.do</string>
+    <string name="getCompanyList">getCompanyList.do</string>
+    <string name="getCosList">getCosList.do</string>
+    <string name="getShopList">getShopList.do</string>
+    <string name="getDiscountList">getDiscountList.do</string>
+    <string name="getSaleDivList">getSaleDivList.do</string>
+    <string name="getMenuDivList">getMenuDivList.do</string>
+    <string name="getMenuList">getMenuList.do</string>
+    <string name="actionLogin">actionLogin.do</string>
+    <string name="getCurrentSales">getCurrentSales.do</string>
+    <string name="getGpsList">getGpsList.do</string>
+    <string name="getMemoList">getMemoList.do</string>
+    <string name="getStatementList">getStatementList.do</string>
+    <string name="getVisitors">getVisitors.do</string>
+    <string name="actionOrder">actionOrder.do</string>
+    <string name="getOrder">getOrder.do</string>
+    <string name="cancelOrder">cancelOrder.do</string>
+    <string name="actionCalculate">actionCalculate.do</string>
+    <string name="moveTable">moveTable.do</string>
+    <string name="mergeTable">mergeTable.do</string>
+    <string name="getRestoreList">getRestoreList.do</string>
+    <string name="actionRestore">actionRestore.do</string>
+    <string name="delProduct">delProduct.do</string>
+    <string name="setPrinterRelay">setPrinterRelay.do</string>
+    <string name="latelyReceiptPrinting">latelyReceiptPrinting.do</string>
+    <string name="receiptPrinting">receiptPrinting.do</string>
+    <string name="getReceiptData">getReceiptData.do</string>
+    <string name="getReceiptList">getReceiptList.do</string>
+    <string name="sucReceiptPrint">sucReceiptPrint.do</string>
+    <string name="getKitchenOrder">getKitchenOrder.do</string>
+    <string name="cancelReceipt">cancelReceipt.do</string>
+
+    <!--Message-->
+    <string name="message_header">알림</string>
+    <string name="error">알 수 없는 오류가 발생했습니다.\n잠시후 다시 시도해주세요.</string>
+    <string name="network_error">인터넷 환경 또는 서버가 불안정합니다.\n잠시후 다시 시도해주세요.</string>
+</resources>

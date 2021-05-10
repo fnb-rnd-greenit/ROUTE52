@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "643533460652",
+    "project_id": "route52",
+    "storage_bucket": "route52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643533460652:android:1638c2bd36476314ef7b09",
+        "android_client_info": {
+          "package_name": "kr.co.itsone.route52"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643533460652-tbms0062vhmnvf050kqopbb262p2mnpq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-0D-yYP5Xf36kqQB73Bb6wsS2rN16200"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643533460652-tbms0062vhmnvf050kqopbb262p2mnpq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/itm_img_main_table"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_table_select"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itm_txt_main_table_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray2"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_main_table_visitor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/dark_gray2"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/itm_txt_main_table_order_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="@color/white"
+            android:textSize="17sp"/>
+
+    </LinearLayout>
+
+</FrameLayout>
