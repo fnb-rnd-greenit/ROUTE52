@@ -309,7 +309,7 @@ public class FnbService extends AbstractDAO{
 		update("fnb.cancelReceipt", params);
 	}
 	
-	public ResultVO actionOrder(@RequestParam Map<String, Object> map) {	
+	public synchronized ResultVO actionOrder(@RequestParam Map<String, Object> map) {	
 		ResultVO result = new ResultVO();
 		
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();

@@ -2,7 +2,8 @@
     <string name="app_name">FNB ROUTE52</string>
 
     <!--Url-->
-    <string name="host">http://itsone.iptime.org/fnb/</string>
+    <!--<string name="host">http://itsone.iptime.org/fnb/</string>-->
+    <string name="host">http://211.55.114.132:8080/ROUTE52/fnb/</string>
 
     <string name="image_host">https://kr.object.ncloudstorage.com/fnb/%s/%s</string>
 
